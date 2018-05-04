@@ -66,8 +66,8 @@ public class DieJiaControl : MonoBehaviour
 	{
 		this.showTextureGo = UnityEngine.Object.Instantiate<GameObject>(this.preNewKuaiImage, base.transform);
 		this.showTextureGo.name = "showTextureGo";
-		this.newTextureWidth = (int)this.panTransfrom.GetComponent<RectTransform>().sizeDelta.x;
-		this.newTextureHeight = (int)this.panTransfrom.GetComponent<RectTransform>().sizeDelta.y;
+		this.newTextureWidth = CommonDefine.Operational_Figure_Length;
+		this.newTextureHeight = CommonDefine.Operational_Figure_Length;
 		this.halfNewTextureWidth = this.newTextureWidth / 2;
 		this.halfNewTextureHeight = this.newTextureHeight / 2;
 		this.maxNewColorIndex = this.newTextureWidth * this.newTextureHeight - 1;
@@ -258,9 +258,9 @@ public class DieJiaControl : MonoBehaviour
 
 		int num2 = -2147483648;
 		List<int> list2 = new List<int>();
-		for (int j = 0; j < GameScene.gameSceneInsta.shiLiDieJiaControl.newColors.Length; j++)
+		for (int j = 0; j < GameScene.gameSceneInsta.Fixed_Figure_Control.newColors.Length; j++)
 		{
-			if (GameScene.gameSceneInsta.shiLiDieJiaControl.newColors[j].a == 255f)
+			if (GameScene.gameSceneInsta.Fixed_Figure_Control.newColors[j].a == 255f)
 			{
 				if (num2 == -2147483648)
 				{

@@ -11,5 +11,7 @@ public enum enBaseImageType : byte
 	ChangFangXing2,
 	LingXing,
 	BigZhengFangXing,
+	ChangFangXingLeft1,
+	ChangFangXingRight1,
 
 }

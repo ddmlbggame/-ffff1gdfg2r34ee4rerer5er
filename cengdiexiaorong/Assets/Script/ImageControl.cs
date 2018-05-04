@@ -57,6 +57,7 @@ public class ImageControl : MonoBehaviour
 
 	public void OnPointerDown()
 	{
+		this.StartDragPosition = base.transform.localPosition;
 		base.transform.SetAsLastSibling();
 		Vector2 one = Vector2.one;
 		RectTransformUtility.ScreenPointToLocalPointInRectangle(GameScene.gameSceneInsta.canvas.transform as RectTransform, Input.mousePosition, GameScene.gameSceneInsta.canvas.worldCamera, out one);
@@ -68,6 +69,9 @@ public class ImageControl : MonoBehaviour
 	private Vector2 _last_input_position = Vector2.zero;
 
 	private Vector2 _drag_delta = Vector2.zero;
+
+	public Vector3 StartDragPosition;
+
 	public void OnDragIng(Vector2 input_position)
 	{
 		//if (frame_count % 2 != 0)
@@ -99,6 +103,15 @@ public class ImageControl : MonoBehaviour
 
 	public void OnDragEnd()
 	{
+		if(base.transform.localPosition.x <-CommonDefine.Operational_Figure_Length/2+ this.halfWidth || base.transform.localPosition.x>CommonDefine.Operational_Figure_Length/2- this.halfWidth
+		|| base.transform.localPosition.y < -CommonDefine.Operational_Figure_Length/2+ halfHeight || base.transform.localPosition.y > CommonDefine.Operational_Figure_Length/2 - halfHeight)
+		{
+			base.transform.localPosition = this.StartDragPosition;
+			this.dieJiaControl.DoGame();
+			_last_input_position = Vector2.zero;
+			_drag_delta = Vector2.zero;
+			return;
+		}
 		_last_input_position = Vector2.zero;
 		_drag_delta = Vector2.zero;
 		this.dieJiaControl.DoDragEnd(this, false);

@@ -28,7 +28,7 @@ public class GameScene : MonoBehaviour
 
 	public RectTransform Operational_Figure;
 
-	public DieJiaControl shiLiDieJiaControl;
+	public DieJiaControl Fixed_Figure_Control;
 
 	public Text jinDuText;
 
@@ -60,8 +60,8 @@ public class GameScene : MonoBehaviour
 		Screen.sleepTimeout = -1;
 		CommonDefine.InitGameData();
 		this.Operational_Figure_Control.dianList = this.CreateDian(this.caoZuoPanTransfrom ,2);
-		this.CreateDian(this.shiLiTransfrom);
-		this.shiLiDieJiaControl.dianList = this.Operational_Figure_Control.dianList;
+		this.CreateDian(this.shiLiTransfrom,2);
+		this.Fixed_Figure_Control.dianList = this.Operational_Figure_Control.dianList;
 	}
 
 	private void Start()
@@ -231,7 +231,7 @@ public class GameScene : MonoBehaviour
 
 	public void CreateImageOnShiLiPan(Dictionary<int, Vector3> levelData)
 	{
-		List<GameObject> allChilds = this.GetAllChilds(this.shiLiDieJiaControl.transform);
+		List<GameObject> allChilds = this.GetAllChilds(this.Fixed_Figure_Control.transform);
 		foreach (GameObject current in allChilds)
 		{
 			if (!(current.name == "showTextureGo"))
@@ -245,18 +245,18 @@ public class GameScene : MonoBehaviour
 		{
 			Vector3 value = current2.Value;
 			Vector3 vector = zero - value;
-			vector += new Vector3(0f, this.shiLiDieJiaControl.showTextureGo.transform.localPosition.y, 0f);
-			this.shiLiDieJiaControl.CreateBaseImage(current2.Key, vector, true);
+			vector += new Vector3(0f, this.Fixed_Figure_Control.showTextureGo.transform.localPosition.y, 0f);
+			this.Fixed_Figure_Control.CreateBaseImage(current2.Key, vector, true);
 		}
 		//this.shiLiDieJiaControl.transform.parent = this.shiLiTransfrom;
 		//this.shiLiDieJiaControl.transform.localScale = Vector3.one;
 		//this.shiLiDieJiaControl.transform.parent = this.caoZuoPanTransfrom.parent;
 		//this.shiLiDieJiaControl.transform.localPosition = new Vector3(0f, this.shiLiTransfrom.localPosition.y - this.shiLiDieJiaControl.showTextureGo.transform.localPosition.y * this.shiLiDieJiaControl.transform.localScale.x, 0f);
-		foreach (ImageControl current3 in this.shiLiDieJiaControl.imageList)
+		foreach (ImageControl current3 in this.Fixed_Figure_Control.imageList)
 		{
 			UnityEngine.Object.Destroy(current3);
 		}
-		this.shiLiDieJiaControl.imageList.Clear();
+		this.Fixed_Figure_Control.imageList.Clear();
 	}
 
 	private List<GameObject> GetAllChilds(Transform rootTransfrom)
@@ -272,7 +272,7 @@ public class GameScene : MonoBehaviour
 	private List<GameObject> CreateDian(Transform parentTransfrom ,float sacle =1)
 	{
 		float num = 200f * sacle;
-		float num2 = 20f * sacle;
+		float num2 = CommonDefine.DotDistance * sacle;
 		int num3 = (int)(num * 2f / num2);
 		int num4 = num3 * num3;
 		List<GameObject> list = new List<GameObject>();

@@ -9,9 +9,13 @@ public class CommonDefine
 {
 	public const bool isEditMode = false;
 
-	public const int kuaiSize = 80;
+	public static int DotDistance = 30;
 
-	public const int kuaiBianSize = 4;
+	public const int kuaiSize = 120;
+
+	public const int kuaiBianSize = 1;
+
+	public static int Operational_Figure_Length = 750;
 
 	public static Dictionary<int, Dictionary<int, Vector3>> gameLevelPostions = new Dictionary<int, Dictionary<int, Vector3>>();
 
@@ -21,25 +25,16 @@ public class CommonDefine
 
 	public const char splitChar = ',';
 
-	public const string md5String = "cdxr";
-
-	public const string currentLevelKey = "CurrentLevel3";
-
 	public const string showTextureGoName = "showTextureGo";
-
-	public const string lastJiBaiRenShuKey = "lastJiBaiRenShuKey";
-
-	public const string randomIntKey = "randomIntKey";
-
-	public const string jiHuoMaKey = "jiHuoMaKey";
 
 	public static int currentLevel;
 
+	public const string Current_Level_Name = "CurrentLeveL";
 	public static void InitGameData()
 	{
-		if (PlayerPrefs.HasKey("CurrentLevel3"))
+		if (PlayerPrefs.HasKey(Current_Level_Name))
 		{
-			CommonDefine.currentLevel = PlayerPrefs.GetInt("CurrentLevel3");
+			CommonDefine.currentLevel = PlayerPrefs.GetInt(Current_Level_Name);
 		}
 		else
 		{
@@ -47,7 +42,7 @@ public class CommonDefine
 		}
 		List<string> list = new List<string>();
 		list.Add("0,0,0,2,0,0");
-		list.Add("2,0,0,8,20,20");
+		list.Add("9,0,0,8,20,20");
 		list.Add("2,0,0,4,40,40");
 		list.Add("5,0,0,2,-40,0");
 		list.Add("6,0,0,3,0,-20,4,0,20");
@@ -210,15 +205,17 @@ public class CommonDefine
 			CommonDefine.maxLevel = i + 1;
 			CommonDefine.gameLevelPostions.Add(CommonDefine.maxLevel, dictionary);
 		}
-		CommonDefine.baseImages.Add((int)enBaseImageType.ZhengFangXing, new BaseImage(enBaseImageType.ZhengFangXing, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize));
-		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing1, new BaseImage(enBaseImageType.SanJiaoXing1, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
-		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing3, new BaseImage(enBaseImageType.SanJiaoXing3, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
-		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing2, new BaseImage(enBaseImageType.SanJiaoXing2, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
-		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing4, new BaseImage(enBaseImageType.SanJiaoXing4, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
-		CommonDefine.baseImages.Add((int)enBaseImageType.LingXing, new BaseImage(enBaseImageType.LingXing, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
-		CommonDefine.baseImages.Add((int)enBaseImageType.ChangFangXing1, new BaseImage(enBaseImageType.ChangFangXing1, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
-		CommonDefine.baseImages.Add((int)enBaseImageType.ChangFangXing2, new BaseImage(enBaseImageType.ChangFangXing2, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
-		CommonDefine.baseImages.Add((int)enBaseImageType.BigZhengFangXing, new BaseImage(enBaseImageType.BigZhengFangXing, kuaiSize * 2 + kuaiBianSize*2, kuaiSize * 2 + kuaiBianSize*2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.ZhengFangXing, new BaseImage(enBaseImageType.ZhengFangXing, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize));
+		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing1, new BaseImage(enBaseImageType.SanJiaoXing1, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize * 2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing3, new BaseImage(enBaseImageType.SanJiaoXing3, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize * 2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing2, new BaseImage(enBaseImageType.SanJiaoXing2, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize * 2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing4, new BaseImage(enBaseImageType.SanJiaoXing4, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize * 2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.LingXing, new BaseImage(enBaseImageType.LingXing, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize * 2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.ChangFangXing1, new BaseImage(enBaseImageType.ChangFangXing1, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize * 2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.ChangFangXing2, new BaseImage(enBaseImageType.ChangFangXing2, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize * 2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.ChangFangXingLeft1, new BaseImage(enBaseImageType.ChangFangXingLeft1, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize * 2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.ChangFangXingRight1, new BaseImage(enBaseImageType.ChangFangXingRight1, kuaiSize + kuaiBianSize * 2, kuaiSize + kuaiBianSize * 2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.BigZhengFangXing, new BaseImage(enBaseImageType.BigZhengFangXing, kuaiSize * 2 + kuaiBianSize * 2, kuaiSize * 2 + kuaiBianSize * 2));
 	}
 
 	public static Texture2D CreateTexture(BaseImage bi)
@@ -314,57 +311,69 @@ public class CommonDefine
 	public static bool IsShowPoint(int imageWidth, int imageHeight, int x, int y, enBaseImageType imageType)
 	{
 		int num = y * imageWidth + x;
-		if (x >= imageWidth - kuaiBianSize || y >= imageHeight - kuaiBianSize|| x < kuaiBianSize || y < kuaiBianSize)
+		if (x >= imageWidth - kuaiBianSize || y >= imageHeight - kuaiBianSize || x < kuaiBianSize || y < kuaiBianSize)
 		{
 			return false;
 		}
 		switch (imageType)
 		{
-		case enBaseImageType.ZhengFangXing:
-		case enBaseImageType.BigZhengFangXing:
+			case enBaseImageType.ZhengFangXing:
+			case enBaseImageType.BigZhengFangXing:
 				return true;
-		case enBaseImageType.SanJiaoXing1:
-			if (y >= x)
-			{
-				return true;
-			}
-			break;
-		case enBaseImageType.SanJiaoXing2:
-			if (y < x)
-			{
-				return true;
-			}
-			break;
-		case enBaseImageType.SanJiaoXing3:
-			if (y <= -x + imageWidth)
-			{
-				return true;
-			}
-			break;
-		case enBaseImageType.SanJiaoXing4:
-			if (y > -x + imageWidth)
-			{
-				return true;
-			}
-			break;
-		case enBaseImageType.ChangFangXing1:
-			if (y > imageHeight / 4 && y < 3 * imageHeight / 4 - 1)
-			{
-				return true;
-			}
-			break;
-		case enBaseImageType.ChangFangXing2:
-			if (x > imageWidth / 4 && x < 3 * imageWidth / 4 - 1)
-			{
-				return true;
-			}
-			break;
-		case enBaseImageType.LingXing:
-			if ((x <= imageWidth / 2 && y <= imageHeight / 2 && x > imageWidth / 2 - y + 2) || (x >= imageWidth / 2 && y <= imageHeight / 2 && x <= y + imageWidth / 2 - 2) || (x <= imageWidth / 2 && y >= imageHeight / 2 && x > y - imageWidth / 2 + 2) || (x >= imageWidth / 2 && y >= imageHeight / 2 && x <= 3 * imageWidth / 2 - y - 2))
-			{
-				return true;
-			}
-			break;
+			case enBaseImageType.SanJiaoXing1:
+				if (y >= x)
+				{
+					return true;
+				}
+				break;
+			case enBaseImageType.SanJiaoXing2:
+				if (y < x)
+				{
+					return true;
+				}
+				break;
+			case enBaseImageType.SanJiaoXing3:
+				if (y <= -x + imageWidth)
+				{
+					return true;
+				}
+				break;
+			case enBaseImageType.SanJiaoXing4:
+				if (y > -x + imageWidth)
+				{
+					return true;
+				}
+				break;
+			case enBaseImageType.ChangFangXing1:
+				if (y > imageHeight / 4 && y < 3 * imageHeight / 4 - 1)
+				{
+					return true;
+				}
+				break;
+			case enBaseImageType.ChangFangXing2:
+				if (x > imageWidth / 4 && x < 3 * imageWidth / 4 - 1)
+				{
+					return true;
+				}
+				break;
+			case enBaseImageType.ChangFangXingLeft1:
+				if (x <imageWidth/2)
+				{
+					return true;
+				}
+				break;
+			case enBaseImageType.ChangFangXingRight1:
+				if (x > imageWidth / 2)
+				{
+					return true;
+				}
+				break;
+			case enBaseImageType.LingXing:
+				if ((x <= imageWidth / 2 && y <= imageHeight / 2 && x > imageWidth / 2 - y + 2) || (x >= imageWidth / 2 && y <= imageHeight / 2 && x <= y + imageWidth / 2 - 2) || (x <= imageWidth / 2 && y >= imageHeight / 2 && x > y - imageWidth / 2 + 2) || (x >= imageWidth / 2 && y >= imageHeight / 2 && x <= 3 * imageWidth / 2 - y - 2))
+				{
+					return true;
+				}
+				break;
 		}
 		return false;
 	}
