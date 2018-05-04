@@ -11,7 +11,7 @@ public class CommonDefine
 
 	public const int kuaiSize = 80;
 
-	public const int kuaiBianSize = 2;
+	public const int kuaiBianSize = 4;
 
 	public static Dictionary<int, Dictionary<int, Vector3>> gameLevelPostions = new Dictionary<int, Dictionary<int, Vector3>>();
 
@@ -47,7 +47,7 @@ public class CommonDefine
 		}
 		List<string> list = new List<string>();
 		list.Add("0,0,0,2,0,0");
-		list.Add("2,0,0,5,20,20");
+		list.Add("2,0,0,8,20,20");
 		list.Add("2,0,0,4,40,40");
 		list.Add("5,0,0,2,-40,0");
 		list.Add("6,0,0,3,0,-20,4,0,20");
@@ -210,15 +210,15 @@ public class CommonDefine
 			CommonDefine.maxLevel = i + 1;
 			CommonDefine.gameLevelPostions.Add(CommonDefine.maxLevel, dictionary);
 		}
-		int num = 0;
-		CommonDefine.baseImages.Add(num++, new BaseImage(enBaseImageType.ZhengFangXing, 84, 84));
-		CommonDefine.baseImages.Add(num++, new BaseImage(enBaseImageType.SanJiaoXing1, 84, 84));
-		CommonDefine.baseImages.Add(num++, new BaseImage(enBaseImageType.SanJiaoXing3, 84, 84));
-		CommonDefine.baseImages.Add(num++, new BaseImage(enBaseImageType.SanJiaoXing2, 84, 84));
-		CommonDefine.baseImages.Add(num++, new BaseImage(enBaseImageType.SanJiaoXing4, 84, 84));
-		CommonDefine.baseImages.Add(num++, new BaseImage(enBaseImageType.LingXing, 84, 84));
-		CommonDefine.baseImages.Add(num++, new BaseImage(enBaseImageType.ChangFangXing1, 84, 84));
-		CommonDefine.baseImages.Add(num++, new BaseImage(enBaseImageType.ChangFangXing2, 84, 84));
+		CommonDefine.baseImages.Add((int)enBaseImageType.ZhengFangXing, new BaseImage(enBaseImageType.ZhengFangXing, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize));
+		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing1, new BaseImage(enBaseImageType.SanJiaoXing1, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing3, new BaseImage(enBaseImageType.SanJiaoXing3, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing2, new BaseImage(enBaseImageType.SanJiaoXing2, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.SanJiaoXing4, new BaseImage(enBaseImageType.SanJiaoXing4, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.LingXing, new BaseImage(enBaseImageType.LingXing, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.ChangFangXing1, new BaseImage(enBaseImageType.ChangFangXing1, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.ChangFangXing2, new BaseImage(enBaseImageType.ChangFangXing2, kuaiSize + kuaiBianSize*2, kuaiSize + kuaiBianSize*2));
+		CommonDefine.baseImages.Add((int)enBaseImageType.BigZhengFangXing, new BaseImage(enBaseImageType.BigZhengFangXing, kuaiSize * 2 + kuaiBianSize*2, kuaiSize * 2 + kuaiBianSize*2));
 	}
 
 	public static Texture2D CreateTexture(BaseImage bi)
@@ -255,32 +255,6 @@ public class CommonDefine
 		return num;
 	}
 
-	public static string GetJiHuoMa()
-	{
-		if (PlayerPrefs.HasKey("jiHuoMaKey"))
-		{
-			return PlayerPrefs.GetString("jiHuoMaKey");
-		}
-		return string.Empty;
-	}
-
-	public static void SaveJiHuoMa(string jhm)
-	{
-		PlayerPrefs.SetString("jiHuoMaKey", jhm);
-		PlayerPrefs.Save();
-	}
-
-	public static bool CheckJiHuoMa(string jhm)
-	{
-		return true;
-		string a = CommonDefine.MD5Code(CommonDefine.GetRandomInt() + "cdxr");
-		if (a == jhm)
-		{
-			CommonDefine.SaveJiHuoMa(jhm);
-			return true;
-		}
-		return false;
-	}
 
 	public static string MD5Code(string text)
 	{
@@ -340,14 +314,15 @@ public class CommonDefine
 	public static bool IsShowPoint(int imageWidth, int imageHeight, int x, int y, enBaseImageType imageType)
 	{
 		int num = y * imageWidth + x;
-		if (x >= imageWidth - 2 || y >= imageHeight - 2 || x < 2 || y < 2)
+		if (x >= imageWidth - kuaiBianSize || y >= imageHeight - kuaiBianSize|| x < kuaiBianSize || y < kuaiBianSize)
 		{
 			return false;
 		}
 		switch (imageType)
 		{
 		case enBaseImageType.ZhengFangXing:
-			return true;
+		case enBaseImageType.BigZhengFangXing:
+				return true;
 		case enBaseImageType.SanJiaoXing1:
 			if (y >= x)
 			{

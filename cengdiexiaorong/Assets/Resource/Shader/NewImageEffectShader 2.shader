@@ -49,6 +49,8 @@ Shader "ImageEffect/MaskIcon"
 		Pass
 	{
 		CGPROGRAM
+// Upgrade NOTE: excluded shader from DX11, OpenGL ES 2.0 because it uses unsized arrays
+#pragma exclude_renderers d3d11 gles
 #pragma vertex vert
 #pragma fragment frag
 
@@ -71,6 +73,7 @@ Shader "ImageEffect/MaskIcon"
 		fixed2 uv : TEXCOORD0;
 		half4 vertex : SV_POSITION;
 		float4 color    : COLOR;
+		half2 texcoord  : TEXCOORD0;
 	};
 
 	sampler2D _MainTex;
@@ -86,11 +89,15 @@ Shader "ImageEffect/MaskIcon"
 		return o;
 	}
 
+	float4 colors[];
+
 	fixed4 frag(v2f i) : COLOR
 	{
 		half4 color = tex2D(_MainTex, i.uv) * i.color;
 		half4 mask = tex2D(_Mask, i.uv);
 		half4 mask2 = tex2D(_Mask2, i.uv);
+		color = fixed4(1, 1, 0, 1);
+
 		//color.a *= mask.a;
 		/*if (pow((i.uv.x - 0), 2) + pow((i.uv.y - 0), 2) <5)
 		{

@@ -17,10 +17,10 @@ public class EditPanel : MonoBehaviour
 	public void OnSaveButtonClick()
 	{
 		string text = string.Empty;
-		Vector3 localPosition = GameScene.gameSceneInsta.caoZuoDieJiaControl.imageList[0].transform.localPosition;
-		for (int i = 0; i < GameScene.gameSceneInsta.caoZuoDieJiaControl.imageList.Count; i++)
+		Vector3 localPosition = GameScene.gameSceneInsta.Operational_Figure_Control.imageList[0].transform.localPosition;
+		for (int i = 0; i < GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Count; i++)
 		{
-			ImageControl imageControl = GameScene.gameSceneInsta.caoZuoDieJiaControl.imageList[i];
+			ImageControl imageControl = GameScene.gameSceneInsta.Operational_Figure_Control.imageList[i];
 			Vector3 localPosition2 = imageControl.transform.localPosition;
 			Vector3 vector = localPosition - localPosition2;
 			if (text == string.Empty)
@@ -91,11 +91,11 @@ public class EditPanel : MonoBehaviour
 
 	public void OnInitClick()
 	{
-		foreach (ImageControl current in GameScene.gameSceneInsta.caoZuoDieJiaControl.imageList)
+		foreach (ImageControl current in GameScene.gameSceneInsta.Operational_Figure_Control.imageList)
 		{
 			UnityEngine.Object.Destroy(current.gameObject);
 		}
-		GameScene.gameSceneInsta.caoZuoDieJiaControl.imageList.Clear();
-		GameScene.gameSceneInsta.caoZuoDieJiaControl.DoGame();
+		GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Clear();
+		GameScene.gameSceneInsta.Operational_Figure_Control.DoGame();
 	}
 }

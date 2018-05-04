@@ -23,16 +23,4 @@ public class LimitGamePanel : MonoBehaviour
 		this.randomIntText.text = "随机码: " + CommonDefine.GetRandomInt();
 	}
 
-	public void OnJiHuoClick()
-	{
-		if (CommonDefine.CheckJiHuoMa(this.jiHuoMaInput.text))
-		{
-			base.gameObject.SetActive(false);
-			GameScene.gameSceneInsta.startPanel.ShowPanel(false);
-		}
-		else
-		{
-			this.jhmErrorText.SetActive(true);
-		}
-	}
 }

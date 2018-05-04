@@ -22,15 +22,11 @@ public class GameScene : MonoBehaviour
 
 	public Transform shiLiTransfrom;
 
-	public Transform caoZuoImageRoot;
-
-	public Transform shiLiImageRoot;
-
-	public Transform dianRootTransfrom;
-
 	public GameObject preDian;
 
-	public DieJiaControl caoZuoDieJiaControl;
+	public DieJiaControl Operational_Figure_Control;
+
+	public RectTransform Operational_Figure;
 
 	public DieJiaControl shiLiDieJiaControl;
 
@@ -59,12 +55,13 @@ public class GameScene : MonoBehaviour
 	private void Awake()
 	{
 		//Analytics.StartWithAppKeyAndChannelId("5a5f086da40fa30870000130", enChannelId.TapTap.ToString());
+		Operational_Figure = this.Operational_Figure_Control.GetComponent<RectTransform>();
 		GameScene.gameSceneInsta = this;
 		Screen.sleepTimeout = -1;
 		CommonDefine.InitGameData();
-		this.caoZuoDieJiaControl.dianList = this.CreateDian(this.caoZuoPanTransfrom);
+		this.Operational_Figure_Control.dianList = this.CreateDian(this.caoZuoPanTransfrom ,2);
 		this.CreateDian(this.shiLiTransfrom);
-		this.shiLiDieJiaControl.dianList = this.caoZuoDieJiaControl.dianList;
+		this.shiLiDieJiaControl.dianList = this.Operational_Figure_Control.dianList;
 	}
 
 	private void Start()
@@ -95,12 +92,12 @@ public class GameScene : MonoBehaviour
 		{
 			Vector2 one = Vector2.one;
 			Profiler.BeginSample("RectTransformUtility");
-			RectTransformUtility.ScreenPointToLocalPointInRectangle(this.canvas.transform as RectTransform, Input.mousePosition, this.canvas.worldCamera, out one);
+			RectTransformUtility.ScreenPointToLocalPointInRectangle(this.Operational_Figure, Input.mousePosition, this.canvas.worldCamera, out one);
 			List<ImageControl> list = new List<ImageControl>();
 			List<ImageControl> list2 = new List<ImageControl>();
 			Profiler.EndSample();
 			Profiler.BeginSample("--------------------1");
-			foreach (ImageControl current in this.caoZuoDieJiaControl.imageList)
+			foreach (ImageControl current in this.Operational_Figure_Control.imageList)
 			{
 				if (one.x > current.transform.localPosition.x - (float)current.halfWidth && one.x < current.transform.localPosition.x + (float)current.halfWidth && one.y > current.transform.localPosition.y - (float)current.halfHeight && one.y < current.transform.localPosition.y + (float)current.halfHeight)
 				{
@@ -178,11 +175,6 @@ public class GameScene : MonoBehaviour
 	public void SetGameStart(int currentLevel)
 	{
 		this.currentGameLevel = currentLevel;
-		if (this.isLimitGame && currentLevel > this.kaiFangLevelCount && !CommonDefine.CheckJiHuoMa(CommonDefine.GetJiHuoMa()))
-		{
-			//this.limitGamePanel.gameObject.SetActive(true);
-			return;
-		}
 		if (currentLevel > CommonDefine.maxLevel)
 		{
 			this.startPanel.ShowTongGuanPanel();
@@ -192,11 +184,11 @@ public class GameScene : MonoBehaviour
 			this.gameStartTime = Time.realtimeSinceStartup;
 			this.isGamePlay = true;
 			Dictionary<int, Vector3> dictionary = CommonDefine.gameLevelPostions[currentLevel];
-			foreach (ImageControl current in this.caoZuoDieJiaControl.imageList)
+			foreach (ImageControl current in this.Operational_Figure_Control.imageList)
 			{
 				UnityEngine.Object.Destroy(current.gameObject);
 			}
-			this.caoZuoDieJiaControl.imageList.Clear();
+			this.Operational_Figure_Control.imageList.Clear();
 			foreach (KeyValuePair<int, Vector3> current2 in dictionary)
 			{
 				this.CreateImageOnCaoZuoPan(current2.Key);
@@ -231,10 +223,10 @@ public class GameScene : MonoBehaviour
 
 	public void CreateImageOnCaoZuoPan(int baseImageIndex)
 	{
-		int num = this.caoZuoDieJiaControl.imageList.Count / 2;
-		int num2 = this.caoZuoDieJiaControl.imageList.Count % 2;
+		int num = this.Operational_Figure_Control.imageList.Count / 2;
+		int num2 = this.Operational_Figure_Control.imageList.Count % 2;
 		Vector2 position = new Vector2((float)(-60 + 120 * num2), (float)(-80 - num * 120));
-		this.caoZuoDieJiaControl.CreateBaseImage(baseImageIndex, position, false);
+		this.Operational_Figure_Control.CreateBaseImage(baseImageIndex, position, false);
 	}
 
 	public void CreateImageOnShiLiPan(Dictionary<int, Vector3> levelData)
@@ -247,7 +239,7 @@ public class GameScene : MonoBehaviour
 				UnityEngine.Object.Destroy(current);
 			}
 		}
-		this.shiLiDieJiaControl.transform.localScale = Vector3.one;
+		//this.shiLiDieJiaControl.transform.localScale = Vector3.one;
 		Vector3 zero = Vector3.zero;
 		foreach (KeyValuePair<int, Vector3> current2 in levelData)
 		{
@@ -256,10 +248,10 @@ public class GameScene : MonoBehaviour
 			vector += new Vector3(0f, this.shiLiDieJiaControl.showTextureGo.transform.localPosition.y, 0f);
 			this.shiLiDieJiaControl.CreateBaseImage(current2.Key, vector, true);
 		}
-		this.shiLiDieJiaControl.transform.parent = this.shiLiTransfrom;
-		this.shiLiDieJiaControl.transform.localScale = Vector3.one;
-		this.shiLiDieJiaControl.transform.parent = this.caoZuoPanTransfrom.parent;
-		this.shiLiDieJiaControl.transform.localPosition = new Vector3(0f, this.shiLiTransfrom.localPosition.y - this.shiLiDieJiaControl.showTextureGo.transform.localPosition.y * this.shiLiDieJiaControl.transform.localScale.x, 0f);
+		//this.shiLiDieJiaControl.transform.parent = this.shiLiTransfrom;
+		//this.shiLiDieJiaControl.transform.localScale = Vector3.one;
+		//this.shiLiDieJiaControl.transform.parent = this.caoZuoPanTransfrom.parent;
+		//this.shiLiDieJiaControl.transform.localPosition = new Vector3(0f, this.shiLiTransfrom.localPosition.y - this.shiLiDieJiaControl.showTextureGo.transform.localPosition.y * this.shiLiDieJiaControl.transform.localScale.x, 0f);
 		foreach (ImageControl current3 in this.shiLiDieJiaControl.imageList)
 		{
 			UnityEngine.Object.Destroy(current3);
@@ -277,10 +269,10 @@ public class GameScene : MonoBehaviour
 		return list;
 	}
 
-	private List<GameObject> CreateDian(Transform parentTransfrom)
+	private List<GameObject> CreateDian(Transform parentTransfrom ,float sacle =1)
 	{
-		float num = 200f * parentTransfrom.localScale.x;
-		float num2 = 20f * parentTransfrom.localScale.x;
+		float num = 200f * sacle;
+		float num2 = 20f * sacle;
 		int num3 = (int)(num * 2f / num2);
 		int num4 = num3 * num3;
 		List<GameObject> list = new List<GameObject>();
@@ -288,18 +280,47 @@ public class GameScene : MonoBehaviour
 		{
 			int num5 = i / num3;
 			int num6 = i % num3;
-			Vector3 vector = new Vector3(-num + (float)num6 * num2, num - (float)num5 * num2, 0f) + parentTransfrom.localPosition;
-			if (Vector3.Distance(vector, parentTransfrom.localPosition) < 190f * parentTransfrom.localScale.x)
-			{
-				GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.preDian, this.dianRootTransfrom);
-				gameObject.transform.localPosition = vector;
-				gameObject.transform.localScale = Vector3.one*0.1f;/* parentTransfrom.localScale;*/
-				list.Add(gameObject);
-			}
+			//Vector3 vector = new Vector3(-num + (float)num6 * num2, num - (float)num5 * num2, 0f) + parentTransfrom.localPosition;
+			//if (Vector3.Distance(vector, parentTransfrom.localPosition) < 190f * sacle)
+			//{
+			//	//GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.preDian, this.dianRootTransfrom);
+			//	GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.preDian, parentTransfrom);
+			//	gameObject.transform.localPosition = vector;
+			//	gameObject.transform.localScale = Vector3.one*0.1f;/* parentTransfrom.localScale;*/
+			//	list.Add(gameObject);
+			//}
+			Vector3 vector = new Vector3(-num + (float)num6 * num2, num - (float)num5 * num2, 0f);
+			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.preDian, parentTransfrom);
+			gameObject.transform.localPosition = vector;
+			gameObject.transform.localScale = Vector3.one * 0.1f;/* parentTransfrom.localScale;*/
+			list.Add(gameObject);
 		}
 		return list;
 	}
 
+	//private List<GameObject> CreateDian(Transform parentTransfrom, float sacle = 1)
+	//{
+	//	float num = 200f * parentTransfrom.localScale.x;
+	//	float num2 = 20f * parentTransfrom.localScale.x;
+	//	int num3 = (int)(num * 2f / num2);
+	//	int num4 = num3 * num3;
+	//	List<GameObject> list = new List<GameObject>();
+	//	for (int i = 0; i < num4; i++)
+	//	{
+	//		int num5 = i / num3;
+	//		int num6 = i % num3;
+	//		Vector3 vector = new Vector3(-num + (float)num6 * num2, num - (float)num5 * num2, 0f) + parentTransfrom.localPosition;
+	//		if (Vector3.Distance(vector, parentTransfrom.localPosition) < 190f * parentTransfrom.localScale.x)
+	//		{
+	//			//GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.preDian, this.dianRootTransfrom);
+	//			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.preDian, parentTransfrom);
+	//			gameObject.transform.localPosition = vector;
+	//			gameObject.transform.localScale = Vector3.one * 0.1f;/* parentTransfrom.localScale;*/
+	//			list.Add(gameObject);
+	//		}
+	//	}
+	//	return list;
+	//}
 	public void DoGameOver()
 	{
 		this.isGamePlay = false;

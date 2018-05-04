@@ -70,14 +70,14 @@ public class ImageControl : MonoBehaviour
 	private Vector2 _drag_delta = Vector2.zero;
 	public void OnDragIng(Vector2 input_position)
 	{
-		if (frame_count % 2 != 0)
-		{
-			frame_count++;
-			return;
-		}
-		frame_count++;
+		//if (frame_count % 2 != 0)
+		//{
+		//	frame_count++;
+		//	return;
+		//}
+		//frame_count++;
 		Vector2 one = Vector2.one;
-		RectTransformUtility.ScreenPointToLocalPointInRectangle(GameScene.gameSceneInsta.canvas.transform as RectTransform, input_position, GameScene.gameSceneInsta.canvas.worldCamera, out one);
+		RectTransformUtility.ScreenPointToLocalPointInRectangle(GameScene.gameSceneInsta.Operational_Figure, input_position, GameScene.gameSceneInsta.canvas.worldCamera, out one);
 		if (_last_input_position == Vector2.zero)
 		{
 			_last_input_position = one;

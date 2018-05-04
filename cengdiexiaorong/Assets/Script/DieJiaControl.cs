@@ -75,7 +75,8 @@ public class DieJiaControl : MonoBehaviour
 		this.maxNewTextureY = this.newTextureHeight - 2;
 		this.showTextureGo.GetComponent<RectTransform>().sizeDelta =
 			new Vector2((float)this.newTextureWidth, (float)this.newTextureHeight);
-		this.showTextureGo.transform.localPosition = GameScene.gameSceneInsta.caoZuoPanTransfrom.localPosition;
+		//this.showTextureGo.transform.localPosition = GameScene.gameSceneInsta.caoZuoPanTransfrom.localPosition;
+		this.showTextureGo.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
 		this.texture = new Texture2D(this.newTextureWidth, this.newTextureHeight);
 		this.newColors = new Color[this.newTextureWidth * this.newTextureHeight];
 		//this.newColors = new List<Color>();
@@ -214,6 +215,9 @@ public class DieJiaControl : MonoBehaviour
 
 	public void DoDragEnd(ImageControl ic, bool isShiLi)
 	{
+		// Èç¹ûÒÆ¶¯Æ«ÀëÌ«Ô¶£¬»Ø¹é
+		//if(ic.)
+
 		float num = 3.40282347E+38f;
 		Vector3 localPosition = Vector3.zero;
 		foreach (GameObject current in this.dianList)
@@ -230,6 +234,7 @@ public class DieJiaControl : MonoBehaviour
 		this.DoGame();
 		if (!isShiLi && !this.DoGameEnd() && this.reDoDragEndCoroutine == null)
 		{
+			// ´ý¿¼ÂÇ
 			this.reDoDragEndCoroutine = base.StartCoroutine(this.ReDoDragEnd(ic));
 		}
 	}
@@ -238,9 +243,9 @@ public class DieJiaControl : MonoBehaviour
 	{
 		int num = -2147483648;
 		List<int> list = new List<int>();
-		for (int i = 0; i < GameScene.gameSceneInsta.caoZuoDieJiaControl.newColors.Length; i++)
+		for (int i = 0; i < GameScene.gameSceneInsta.Operational_Figure_Control.newColors.Length; i++)
 		{
-			if (GameScene.gameSceneInsta.caoZuoDieJiaControl.newColors[i].a == 255f)
+			if (GameScene.gameSceneInsta.Operational_Figure_Control.newColors[i].a == 255f)
 			{
 				if (num == -2147483648)
 				{
