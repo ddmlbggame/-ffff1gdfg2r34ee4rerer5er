@@ -66,8 +66,8 @@ public class DieJiaControl : MonoBehaviour
 	{
 		this.showTextureGo = UnityEngine.Object.Instantiate<GameObject>(this.preNewKuaiImage, base.transform);
 		this.showTextureGo.name = "showTextureGo";
-		this.newTextureWidth = CommonDefine.Operational_Figure_Length;
-		this.newTextureHeight = CommonDefine.Operational_Figure_Length;
+		this.newTextureWidth = CommonConfiguration.Operational_Figure_Length;
+		this.newTextureHeight = CommonConfiguration.Operational_Figure_Length;
 		this.halfNewTextureWidth = this.newTextureWidth / 2;
 		this.halfNewTextureHeight = this.newTextureHeight / 2;
 		this.maxNewColorIndex = this.newTextureWidth * this.newTextureHeight - 1;

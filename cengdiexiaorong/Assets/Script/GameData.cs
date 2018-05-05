@@ -63,7 +63,7 @@ public class GameData {
 			for (int j = 2; j < array.Length; j += 5)
 			{
 				ImageData image_data = new ImageData();
-				image_data.ImageType = (enBaseImageType)int.Parse(array[j]);
+				image_data.ImageType = (ImageType)int.Parse(array[j]);
 				image_data.ImagePosition = new Vector3(float.Parse(array[j + 1]), float.Parse(array[j + 2]), 0f);
 				image_data.OperationalImagePosition = new Vector3(float.Parse(array[j + 3]), float.Parse(array[j + 4]));
 				level_data.ImageDatas.Add(image_data);

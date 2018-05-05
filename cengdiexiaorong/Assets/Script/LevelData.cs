@@ -14,7 +14,7 @@ public class LevelData {
 
 public struct ImageData
 {
-	public enBaseImageType ImageType;
+	public ImageType ImageType;
 
 	public Vector2 ImagePosition;
 

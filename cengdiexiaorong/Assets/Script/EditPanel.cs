@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class EditPanel : MonoBehaviour
 {
 	public Transform baseImageGrid;
 
-	public enBaseImageType ImageType;
+	public ImageType ImageType;
 
 	public LevelDifficulty Level_Difficulty;
 
@@ -34,7 +35,34 @@ public class EditPanel : MonoBehaviour
 			}
 			
 		}
-		CommonDefine.WriteFile(text, null);
+		WriteFile(text, null);
+	}
+
+	public static void WriteFile(string text, string path = null)
+	{
+		if (path == null)
+		{
+			int num = 1;
+			while (true)
+			{
+				path = Environment.CurrentDirectory + "/Assets/Resources/gamedatas/" + num.ToString() + ".txt";
+				if (!File.Exists(path))
+				{
+					break;
+				}
+				num++;
+			}
+		}
+		else
+		{
+			path = Environment.CurrentDirectory + "/Assets/Resources/gamedatas/" + path + ".txt";
+		}
+		FileStream fileStream = new FileStream(path, FileMode.Create);
+		StreamWriter streamWriter = new StreamWriter(fileStream);
+		streamWriter.WriteLine(text);
+		streamWriter.Flush();
+		streamWriter.Close();
+		fileStream.Close();
 	}
 
 	private Dictionary<ImageControl, imagedata> image_datas = new Dictionary<ImageControl, imagedata>();

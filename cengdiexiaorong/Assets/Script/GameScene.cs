@@ -34,11 +34,6 @@ public class GameScene : MonoBehaviour
 
 	private Coroutine gameScoreCoroutine;
 
-	[HideInInspector]
-	public LimitGamePanel limitGamePanel;
-	[HideInInspector]
-	public StartPanel startPanel;
-
 	private float gameStartTime;
 
 	private bool isGamePlay;
@@ -58,7 +53,7 @@ public class GameScene : MonoBehaviour
 		Operational_Figure = this.Operational_Figure_Control.GetComponent<RectTransform>();
 		GameScene.gameSceneInsta = this;
 		Screen.sleepTimeout = -1;
-		CommonDefine.InitGameData();
+		CommonConfiguration.InitGameData();
 		GameData.Instance.Init();
 		this.Operational_Figure_Control.dianList = this.CreateDian(this.caoZuoPanTransfrom ,2);
 		this.CreateDian(this.shiLiTransfrom,2);
@@ -67,7 +62,7 @@ public class GameScene : MonoBehaviour
 
 	private void Start()
 	{
-		this.RefreshJinDu(CommonDefine.currentLevel);
+		this.RefreshJinDu(CommonConfiguration.currentLevel);
 		//this.startPanel.ShowPanel(false);
 		//base.StartCoroutine(this.ShowFPS());
 		GameScene.gameSceneInsta.SetGameStart(2);
@@ -104,7 +99,7 @@ public class GameScene : MonoBehaviour
 				{
 					int x = (int)((float)current.halfWidth - (current.transform.localPosition.x - one.x));
 					int y = (int)((float)current.halfHeight - (current.transform.localPosition.y - one.y));
-					if (CommonDefine.IsShowPoint(current.showImageTexture.width, current.showImageTexture.height, x, y, CommonDefine.baseImages[current.imageIndex].baseImageType))
+					if (CommonConfiguration.IsShowPoint(current.showImageTexture.width, current.showImageTexture.height, x, y, CommonConfiguration.baseImages[current.imageIndex].baseImageType))
 					{
 						list.Add(current);
 					}
@@ -198,14 +193,14 @@ public class GameScene : MonoBehaviour
 
 	public void RefreshJinDu(int currentLevel)
 	{
-		if (currentLevel > CommonDefine.gameLevelPostions.Count)
+		if (currentLevel > CommonConfiguration.gameLevelPostions.Count)
 		{
 			this.jinDuText.text = string.Concat(new object[]
 			{
 				"总进度 ",
-				CommonDefine.gameLevelPostions.Count,
+				CommonConfiguration.gameLevelPostions.Count,
 				"/",
-				CommonDefine.gameLevelPostions.Count
+				CommonConfiguration.gameLevelPostions.Count
 			});
 		}
 		else
@@ -215,7 +210,7 @@ public class GameScene : MonoBehaviour
 				"总进度 ",
 				currentLevel,
 				"/",
-				CommonDefine.gameLevelPostions.Count
+				CommonConfiguration.gameLevelPostions.Count
 			});
 		}
 	}
@@ -279,7 +274,7 @@ public class GameScene : MonoBehaviour
 	private List<GameObject> CreateDian(Transform parentTransfrom ,float sacle =1)
 	{
 		float num = 200f * sacle;
-		float num2 = CommonDefine.DotDistance * sacle;
+		float num2 = CommonConfiguration.DotDistance * sacle;
 		int num3 = (int)(num * 2f / num2);
 		int num4 = num3 * num3;
 		List<GameObject> list = new List<GameObject>();
@@ -347,7 +342,7 @@ public class GameScene : MonoBehaviour
 		if (GUI.Button(new Rect(0, 100, 200, 50), "开始"))
 		{
 			GameScene.gameSceneInsta.SetGameStart(int.Parse(sceneid));
-			this.RefreshJinDu(CommonDefine.currentLevel);
+			this.RefreshJinDu(CommonConfiguration.currentLevel);
 			
 		}
 	}

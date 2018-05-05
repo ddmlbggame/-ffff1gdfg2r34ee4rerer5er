@@ -2,13 +2,13 @@ using System;
 
 public class BaseImage
 {
-	public enBaseImageType baseImageType;
+	public ImageType baseImageType;
 
 	public int imageWidth;
 
 	public int imageHeight;
 
-	public BaseImage(enBaseImageType baseImageType, int imageWidth, int imageHeight)
+	public BaseImage(ImageType baseImageType, int imageWidth, int imageHeight)
 	{
 		this.baseImageType = baseImageType;
 		this.imageWidth = imageWidth;

@@ -34,7 +34,7 @@ public class ImageControl : MonoBehaviour
 	{
 		this.imageIndex = imageIndex;
 		this.dieJiaControl = dieJiaControl;
-		this.baseImagetexture = CommonDefine.CreateTexture(CommonDefine.baseImages[imageIndex]);
+		this.baseImagetexture = CommonConfiguration.CreateTexture(CommonConfiguration.baseImages[imageIndex]);
 		this.halfWidth = this.baseImagetexture.width / 2;
 		this.halfHeight = this.baseImagetexture.height / 2;
 		this.InitImage();
@@ -104,8 +104,8 @@ public class ImageControl : MonoBehaviour
 
 	public void OnDragEnd()
 	{
-		if(base.transform.localPosition.x <-CommonDefine.Operational_Figure_Length/2+ this.halfWidth || base.transform.localPosition.x>CommonDefine.Operational_Figure_Length/2- this.halfWidth
-		|| base.transform.localPosition.y < -CommonDefine.Operational_Figure_Length/2+ halfHeight || base.transform.localPosition.y > CommonDefine.Operational_Figure_Length/2 - halfHeight)
+		if(base.transform.localPosition.x <-CommonConfiguration.Operational_Figure_Length/2+ this.halfWidth || base.transform.localPosition.x>CommonConfiguration.Operational_Figure_Length/2- this.halfWidth
+		|| base.transform.localPosition.y < -CommonConfiguration.Operational_Figure_Length/2+ halfHeight || base.transform.localPosition.y > CommonConfiguration.Operational_Figure_Length/2 - halfHeight)
 		{
 			base.transform.localPosition = this.StartDragPosition;
 			this.dieJiaControl.DoGame();
