@@ -59,6 +59,7 @@ public class GameScene : MonoBehaviour
 		GameScene.gameSceneInsta = this;
 		Screen.sleepTimeout = -1;
 		CommonDefine.InitGameData();
+		GameData.Instance.Init();
 		this.Operational_Figure_Control.dianList = this.CreateDian(this.caoZuoPanTransfrom ,2);
 		this.CreateDian(this.shiLiTransfrom,2);
 		this.Fixed_Figure_Control.dianList = this.Operational_Figure_Control.dianList;
@@ -69,7 +70,7 @@ public class GameScene : MonoBehaviour
 		this.RefreshJinDu(CommonDefine.currentLevel);
 		//this.startPanel.ShowPanel(false);
 		//base.StartCoroutine(this.ShowFPS());
-		GameScene.gameSceneInsta.SetGameStart(50);
+		GameScene.gameSceneInsta.SetGameStart(2);
 	}
 
 	private void Update()
@@ -172,29 +173,27 @@ public class GameScene : MonoBehaviour
 		}
 }
 
-	public void SetGameStart(int currentLevel)
+	public void SetGameStart(int currentLevel , LevelDifficulty level_difficulty = LevelDifficulty.Simple)
 	{
 		this.currentGameLevel = currentLevel;
-		if (currentLevel > CommonDefine.maxLevel)
+		this.gameStartTime = Time.realtimeSinceStartup;
+		this.isGamePlay = true;
+		//Dictionary<int, Vector3> dictionary = CommonDefine.gameLevelPostions[currentLevel];
+		foreach (ImageControl current in this.Operational_Figure_Control.imageList)
 		{
-			this.startPanel.ShowTongGuanPanel();
+			UnityEngine.Object.Destroy(current.gameObject);
 		}
-		else
+		this.Operational_Figure_Control.imageList.Clear();
+		var level_data = GameData.Instance.GetLevelData(currentLevel, level_difficulty);
+		for (int i = 0; i < level_data.ImageDatas.Count; i++)
 		{
-			this.gameStartTime = Time.realtimeSinceStartup;
-			this.isGamePlay = true;
-			Dictionary<int, Vector3> dictionary = CommonDefine.gameLevelPostions[currentLevel];
-			foreach (ImageControl current in this.Operational_Figure_Control.imageList)
-			{
-				UnityEngine.Object.Destroy(current.gameObject);
-			}
-			this.Operational_Figure_Control.imageList.Clear();
-			foreach (KeyValuePair<int, Vector3> current2 in dictionary)
-			{
-				this.CreateImageOnCaoZuoPan(current2.Key);
-			}
-			this.CreateImageOnShiLiPan(dictionary);
+			this.CreateImageOnCaoZuoPan(level_data.ImageDatas[i]);
 		}
+		//foreach (KeyValuePair<int, Vector3> current2 in dictionary)
+		//{
+		//	this.CreateImageOnCaoZuoPan(current2.Key);
+		//}
+		this.CreateImageOnShiLiPan(level_data);
 	}
 
 	public void RefreshJinDu(int currentLevel)
@@ -221,15 +220,16 @@ public class GameScene : MonoBehaviour
 		}
 	}
 
-	public void CreateImageOnCaoZuoPan(int baseImageIndex)
+	public void CreateImageOnCaoZuoPan(ImageData image_data)
 	{
-		int num = this.Operational_Figure_Control.imageList.Count / 2;
-		int num2 = this.Operational_Figure_Control.imageList.Count % 2;
-		Vector2 position = new Vector2((float)(-60 + 120 * num2), (float)(-80 - num * 120));
-		this.Operational_Figure_Control.CreateBaseImage(baseImageIndex, position, false);
+		//int num = this.Operational_Figure_Control.imageList.Count / 2;
+		//int num2 = this.Operational_Figure_Control.imageList.Count % 2;
+		//Vector2 position = new Vector2((float)(-CommonDefine.kuaiSize + CommonDefine.kuaiSize * num2), (float)(-120 - num * 120));
+
+		this.Operational_Figure_Control.CreateBaseImage((int)image_data.ImageType, image_data.OperationalImagePosition, false);
 	}
 
-	public void CreateImageOnShiLiPan(Dictionary<int, Vector3> levelData)
+	public void CreateImageOnShiLiPan(LevelData levelData)
 	{
 		List<GameObject> allChilds = this.GetAllChilds(this.Fixed_Figure_Control.transform);
 		foreach (GameObject current in allChilds)
@@ -241,13 +241,20 @@ public class GameScene : MonoBehaviour
 		}
 		//this.shiLiDieJiaControl.transform.localScale = Vector3.one;
 		Vector3 zero = Vector3.zero;
-		foreach (KeyValuePair<int, Vector3> current2 in levelData)
+		foreach (var item in levelData.ImageDatas)
 		{
-			Vector3 value = current2.Value;
-			Vector3 vector = zero - value;
-			vector += new Vector3(0f, this.Fixed_Figure_Control.showTextureGo.transform.localPosition.y, 0f);
-			this.Fixed_Figure_Control.CreateBaseImage(current2.Key, vector, true);
+			Vector3 value = item.ImagePosition;
+			Vector3 vector = value;
+			this.Fixed_Figure_Control.CreateBaseImage((int)item.ImageType, vector, true);
 		}
+		//foreach (KeyValuePair<int, Vector3> current2 in levelData)
+		//{
+		//	Vector3 value = current2.Value;
+		//	Vector3 vector = value;
+		//	//Vector3 vector = zero - value;
+		//	//vector += new Vector3(0f, this.Fixed_Figure_Control.showTextureGo.transform.localPosition.y, 0f);
+		//	this.Fixed_Figure_Control.CreateBaseImage(current2.Key, vector, true);
+		//}
 		//this.shiLiDieJiaControl.transform.parent = this.shiLiTransfrom;
 		//this.shiLiDieJiaControl.transform.localScale = Vector3.one;
 		//this.shiLiDieJiaControl.transform.parent = this.caoZuoPanTransfrom.parent;

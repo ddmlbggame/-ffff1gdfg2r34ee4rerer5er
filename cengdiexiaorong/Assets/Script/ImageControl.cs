@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class ImageControl : MonoBehaviour
 {
 	public Image image;
@@ -60,7 +61,7 @@ public class ImageControl : MonoBehaviour
 		this.StartDragPosition = base.transform.localPosition;
 		base.transform.SetAsLastSibling();
 		Vector2 one = Vector2.one;
-		RectTransformUtility.ScreenPointToLocalPointInRectangle(GameScene.gameSceneInsta.canvas.transform as RectTransform, Input.mousePosition, GameScene.gameSceneInsta.canvas.worldCamera, out one);
+		RectTransformUtility.ScreenPointToLocalPointInRectangle(GameScene.gameSceneInsta.Operational_Figure, Input.mousePosition, GameScene.gameSceneInsta.canvas.worldCamera, out one);
 		this.deltaPosition = new Vector2(base.transform.localPosition.x, base.transform.localPosition.y) - one;
 	}
 

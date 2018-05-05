@@ -83,7 +83,7 @@ public class DieJiaControl : MonoBehaviour
 		this.RefreshDaKuai();
 	}
 
-	public void CreateBaseImage(int baseImageIndex, Vector2 position, bool isShiLi)
+	public ImageControl CreateBaseImage(int baseImageIndex, Vector2 position, bool isShiLi)
 	{
 		GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.preKuaiImage, base.transform);
 		gameObject.name = baseImageIndex.ToString();
@@ -91,7 +91,9 @@ public class DieJiaControl : MonoBehaviour
 		component.SetImage(baseImageIndex, this);
 		gameObject.transform.localPosition = position;
 		this.imageList.Add(component);
-		this.DoDragEnd(component, isShiLi);
+		this.DoGame();
+		return component;
+		//this.DoDragEnd(component, isShiLi);
 	}
 
 	private void InitColors()
@@ -286,9 +288,5 @@ public class DieJiaControl : MonoBehaviour
 
 		GameScene.gameSceneInsta.DoGameOver();
 		return true;
-	}
-
-	public void OnTestClick()
-	{
 	}
 }
