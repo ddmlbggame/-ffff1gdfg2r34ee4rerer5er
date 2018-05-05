@@ -217,8 +217,6 @@ public class DieJiaControl : MonoBehaviour
 
 	public void DoDragEnd(ImageControl ic, bool isShiLi)
 	{
-		// Èç¹ûÒÆ¶¯Æ«ÀëÌ«Ô¶£¬»Ø¹é
-		//if(ic.)
 
 		float num = 3.40282347E+38f;
 		Vector3 localPosition = Vector3.zero;
@@ -231,13 +229,38 @@ public class DieJiaControl : MonoBehaviour
 				localPosition = current.transform.localPosition;
 			}
 		}
-
-		ic.transform.localPosition = localPosition;
+		if(ic.imageIndex == (int)ImageType.ParallelogramLong3 || ic.imageIndex == (int)ImageType.ParallelogramLong4)
+		{
+			if(ic.transform.localPosition.y > localPosition.y)
+			{
+				ic.transform.localPosition = new Vector3(localPosition.x, localPosition.y + CommonConfiguration.kuaiSize / 4, 0);
+			}else
+			{
+				ic.transform.localPosition = new Vector3(localPosition.x, localPosition.y - CommonConfiguration.kuaiSize / 4, 0);
+			}
+			
+		}
+		else if(ic.imageIndex == (int)ImageType.ParallelogramLong1 || ic.imageIndex == (int)ImageType.ParallelogramLong2)
+		{
+			if (ic.transform.localPosition.x > localPosition.x)
+			{
+				ic.transform.localPosition = new Vector3(localPosition.x + CommonConfiguration.kuaiSize / 4, localPosition.y , 0);
+			}
+			else
+			{
+				ic.transform.localPosition = new Vector3(localPosition.x - CommonConfiguration.kuaiSize / 4, localPosition.y , 0);
+			}
+		}
+		else
+		{
+			ic.transform.localPosition = localPosition;
+		}
+		
 		this.DoGame();
 		if (!isShiLi && !this.DoGameEnd() && this.reDoDragEndCoroutine == null)
 		{
 			// ´ý¿¼ÂÇ
-			this.reDoDragEndCoroutine = base.StartCoroutine(this.ReDoDragEnd(ic));
+			//this.reDoDragEndCoroutine = base.StartCoroutine(this.ReDoDragEnd(ic));
 		}
 	}
 
