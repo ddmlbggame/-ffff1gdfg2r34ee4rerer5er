@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,9 +41,6 @@ public class GameScene : MonoBehaviour
 
 	private ImageControl currentSelectImage;
 
-	[HideInInspector]
-	public int currentGameLevel;
-
 	public bool isLimitGame = true;
 
 	private int kaiFangLevelCount = 30;
@@ -72,6 +70,11 @@ public class GameScene : MonoBehaviour
 	{
 		if (this.isGamePlay)
 		{
+			// 如果正在提示中
+			if (GameData.Instance.doing_show_tip)
+			{
+				return;
+			}
 			Profiler.BeginSample("--------------------Update");
 			this.SelectDragImage();
 			Profiler.EndSample();
@@ -170,25 +173,41 @@ public class GameScene : MonoBehaviour
 
 	public void SetGameStart(int currentLevel , LevelDifficulty level_difficulty = LevelDifficulty.Simple)
 	{
-		this.currentGameLevel = currentLevel;
+		GameData.Instance.currentGameLevel = currentLevel;
+		GameData.Instance.Current_Difficulty = level_difficulty;
 		this.gameStartTime = Time.realtimeSinceStartup;
 		this.isGamePlay = true;
-		//Dictionary<int, Vector3> dictionary = CommonDefine.gameLevelPostions[currentLevel];
+		//foreach (ImageControl current in this.Operational_Figure_Control.imageList)
+		//{
+		//	UnityEngine.Object.Destroy(current.gameObject);
+		//}
+		//this.Operational_Figure_Control.imageList.Clear();
+		//var level_data = GameData.Instance.GetLevelData(currentLevel, level_difficulty);
+		//for (int i = 0; i < level_data.ImageDatas.Count; i++)
+		//{
+		//	this.CreateImageOnCaoZuoPan(level_data.ImageDatas[i]);
+		//}
+		var level_data = GameData.Instance.GetLevelData(currentLevel, level_difficulty);
+		this.CreateOperationalImage(level_data);
+		this.CreateImageOnShiLiPan(level_data);
+	}
+
+	private void CreateOperationalImage(LevelData level_data)
+	{
+		this._ResetOprationalImage();
+		for (int i = 0; i < level_data.ImageDatas.Count; i++)
+		{
+			this.CreateImageOnCaoZuoPan(level_data.ImageDatas[i]);
+		}
+	}
+
+	private void _ResetOprationalImage()
+	{
 		foreach (ImageControl current in this.Operational_Figure_Control.imageList)
 		{
 			UnityEngine.Object.Destroy(current.gameObject);
 		}
 		this.Operational_Figure_Control.imageList.Clear();
-		var level_data = GameData.Instance.GetLevelData(currentLevel, level_difficulty);
-		for (int i = 0; i < level_data.ImageDatas.Count; i++)
-		{
-			this.CreateImageOnCaoZuoPan(level_data.ImageDatas[i]);
-		}
-		//foreach (KeyValuePair<int, Vector3> current2 in dictionary)
-		//{
-		//	this.CreateImageOnCaoZuoPan(current2.Key);
-		//}
-		this.CreateImageOnShiLiPan(level_data);
 	}
 
 	public void RefreshJinDu(int currentLevel)
@@ -221,7 +240,7 @@ public class GameScene : MonoBehaviour
 		//int num2 = this.Operational_Figure_Control.imageList.Count % 2;
 		//Vector2 position = new Vector2((float)(-CommonDefine.kuaiSize + CommonDefine.kuaiSize * num2), (float)(-120 - num * 120));
 
-		this.Operational_Figure_Control.CreateBaseImage((int)image_data.ImageType, image_data.OperationalImagePosition, false);
+		this.Operational_Figure_Control.CreateBaseImage(image_data ,(int)image_data.ImageType, image_data.OperationalImagePosition, false);
 	}
 
 	public void CreateImageOnShiLiPan(LevelData levelData)
@@ -240,7 +259,7 @@ public class GameScene : MonoBehaviour
 		{
 			Vector3 value = item.ImagePosition;
 			Vector3 vector = value;
-			this.Fixed_Figure_Control.CreateBaseImage((int)item.ImageType, vector, true);
+			this.Fixed_Figure_Control.CreateBaseImage(item ,(int)item.ImageType, vector, true);
 		}
 		//foreach (KeyValuePair<int, Vector3> current2 in levelData)
 		//{
@@ -254,6 +273,7 @@ public class GameScene : MonoBehaviour
 		//this.shiLiDieJiaControl.transform.localScale = Vector3.one;
 		//this.shiLiDieJiaControl.transform.parent = this.caoZuoPanTransfrom.parent;
 		//this.shiLiDieJiaControl.transform.localPosition = new Vector3(0f, this.shiLiTransfrom.localPosition.y - this.shiLiDieJiaControl.showTextureGo.transform.localPosition.y * this.shiLiDieJiaControl.transform.localScale.x, 0f);
+
 		foreach (ImageControl current3 in this.Fixed_Figure_Control.imageList)
 		{
 			UnityEngine.Object.Destroy(current3);
@@ -331,6 +351,50 @@ public class GameScene : MonoBehaviour
 		this.audioSource.PlayOneShot(this.success);
 	}
 
+	public void ShowTip()
+	{
+		GameData.Instance.doing_show_tip = true;
+		var level_data = GameData.Instance.GetLevelData(GameData.Instance.currentGameLevel, GameData.Instance.Current_Difficulty);
+		this.CreateOperationalImage(level_data);
+		//if(MoveIEnumerator == null)
+		//{
+		//	MoveIEnumerator = Move();
+		//}else
+		//{
+		//	StopCoroutine(MoveIEnumerator);
+		//}
+		MoveIEnumerator = Move();
+		StartCoroutine(MoveIEnumerator);
+
+	}
+	IEnumerator MoveIEnumerator = null;
+
+	public IEnumerator Move()
+	{
+		bool is_done = false;
+		yield return new WaitForSeconds(0.2f);
+		foreach (ImageControl current in this.Operational_Figure_Control.imageList)
+		{
+			UnityEngine.Debug.Log("----移动");
+			is_done = false;
+			//调用DOmove方法来让图片移动
+			Tweener tweener = current.GetComponent<RectTransform>().DOLocalMove(current.image_data.ImagePosition, 0.3f);
+			//设置这个Tween不受Time.scale影响
+			tweener.SetUpdate(true);
+			//设置移动类型
+			tweener.SetEase(Ease.Linear);
+			tweener.OnUpdate(() => { current.DragToPos(current.transform.localPosition); });
+			tweener.OnStepComplete(() => 
+			{
+				is_done = true;
+				UnityEngine.Debug.Log("----移动fff");
+			});
+			yield return new WaitUntil(()=>is_done == true);
+		}
+		UnityEngine.Debug.Log("----移动完成");
+		GameData.Instance.doing_show_tip = false;
+	}
+
 	private string sceneid = "";
 	public void OnGUI()
 	{
@@ -344,6 +408,11 @@ public class GameScene : MonoBehaviour
 			GameScene.gameSceneInsta.SetGameStart(int.Parse(sceneid));
 			this.RefreshJinDu(CommonConfiguration.currentLevel);
 			
+		}
+
+		if (GUI.Button(new Rect(0, 250, 200, 50), "提示"))
+		{
+			ShowTip();
 		}
 	}
 

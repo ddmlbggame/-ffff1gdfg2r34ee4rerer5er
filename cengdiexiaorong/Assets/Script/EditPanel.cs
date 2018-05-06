@@ -68,13 +68,20 @@ public class EditPanel : MonoBehaviour
 	private Dictionary<ImageControl, imagedata> image_datas = new Dictionary<ImageControl, imagedata>();
 	public void OnSaveData()
 	{
+		
 		image_datas.Clear();
+		ImageControl first_image = null;
 		for (int i = 0; i < GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Count; i++)
 		{
 			imagedata data = new imagedata();
 			ImageControl imageControl = GameScene.gameSceneInsta.Operational_Figure_Control.imageList[i];
+			if(first_image == null)
+			{
+				first_image = imageControl;
+			}
+			var pos = GameScene.gameSceneInsta.Operational_Figure_Control.showTextureGo.transform.localPosition - first_image.transform.localPosition;
 			data.index = imageControl.imageIndex;
-			data.pos = imageControl.transform.localPosition;
+			data.pos = imageControl.transform.localPosition + pos;
 			image_datas.Add(imageControl,data);
 		}
 	}
@@ -126,7 +133,7 @@ public class EditPanel : MonoBehaviour
 		int num = GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Count / 2;
 		int num2 = GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Count % 2;
 		Vector2 position = new Vector2((float)(-60 + 120 * num2), (float)(-80 - num * 120));
-		var image_control = this._CreateImageOnCaoZuoPan((int)this.ImageType , Vector2.zero);
+		var image_control = this._CreateImageOnCaoZuoPan(new ImageData() ,(int)this.ImageType , Vector2.zero);
 		this.images.Add(image_control, image_control);
 	}
 
@@ -145,9 +152,9 @@ public class EditPanel : MonoBehaviour
 		GameScene.gameSceneInsta.Operational_Figure_Control.DoGame();
 	}
 
-	private ImageControl _CreateImageOnCaoZuoPan(int baseImageIndex ,Vector2 pos)
+	private ImageControl _CreateImageOnCaoZuoPan(ImageData data, int baseImageIndex ,Vector2 pos)
 	{
-		return GameScene.gameSceneInsta.Operational_Figure_Control.CreateBaseImage(baseImageIndex, pos, false);
+		return GameScene.gameSceneInsta.Operational_Figure_Control.CreateBaseImage(data ,baseImageIndex, pos, false);
 	}
 
 	public void OnInit()

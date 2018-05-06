@@ -14,6 +14,12 @@ public class GameData {
 
 	private Dictionary<int, LevelData> _abnormal_level_datas;
 
+	public bool doing_show_tip = false;
+
+	public int currentGameLevel;
+
+	public LevelDifficulty Current_Difficulty = LevelDifficulty.Simple;
+
 	private static GameData _instance;
 
 	public static GameData Instance

@@ -83,11 +83,12 @@ public class DieJiaControl : MonoBehaviour
 		this.RefreshDaKuai();
 	}
 
-	public ImageControl CreateBaseImage(int baseImageIndex, Vector2 position, bool isShiLi)
+	public ImageControl CreateBaseImage(ImageData data ,int baseImageIndex, Vector2 position, bool isShiLi)
 	{
 		GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.preKuaiImage, base.transform);
 		gameObject.name = baseImageIndex.ToString();
 		ImageControl component = gameObject.GetComponent<ImageControl>();
+		component.SetImageData(data);
 		component.SetImage(baseImageIndex, this);
 		gameObject.transform.localPosition = position;
 		this.imageList.Add(component);
@@ -201,7 +202,7 @@ public class DieJiaControl : MonoBehaviour
 	//	Profiler.EndSample();
 	//}
 
-	private void RefreshDaKuai()
+	public void RefreshDaKuai()
 	{
 		Profiler.BeginSample("-------SetPixels");
 		this.texture.SetPixels(this.newColors);
@@ -229,7 +230,9 @@ public class DieJiaControl : MonoBehaviour
 				localPosition = current.transform.localPosition;
 			}
 		}
-		if(ic.imageIndex == (int)ImageType.ParallelogramLong3 || ic.imageIndex == (int)ImageType.ParallelogramLong4)
+		if(ic.imageIndex == (int)ImageType.ParallelogramLong3 || ic.imageIndex == (int)ImageType.ParallelogramLong4
+			|| ic.imageIndex == (int)ImageType.BigChangFangXing1
+			|| ic.imageIndex == (int)ImageType.BigChangFangXing3 )
 		{
 			if(ic.transform.localPosition.y > localPosition.y)
 			{
@@ -240,15 +243,17 @@ public class DieJiaControl : MonoBehaviour
 			}
 			
 		}
-		else if(ic.imageIndex == (int)ImageType.ParallelogramLong1 || ic.imageIndex == (int)ImageType.ParallelogramLong2)
+		else if (ic.imageIndex == (int)ImageType.ParallelogramLong1 || ic.imageIndex == (int)ImageType.ParallelogramLong2
+			|| ic.imageIndex == (int)ImageType.BigChangFangXing2
+			|| ic.imageIndex == (int)ImageType.BigChangFangXing4)
 		{
 			if (ic.transform.localPosition.x > localPosition.x)
 			{
-				ic.transform.localPosition = new Vector3(localPosition.x + CommonConfiguration.kuaiSize / 4, localPosition.y , 0);
+				ic.transform.localPosition = new Vector3(localPosition.x + CommonConfiguration.kuaiSize / 4, localPosition.y, 0);
 			}
 			else
 			{
-				ic.transform.localPosition = new Vector3(localPosition.x - CommonConfiguration.kuaiSize / 4, localPosition.y , 0);
+				ic.transform.localPosition = new Vector3(localPosition.x - CommonConfiguration.kuaiSize / 4, localPosition.y, 0);
 			}
 		}
 		else
@@ -260,7 +265,7 @@ public class DieJiaControl : MonoBehaviour
 		if (!isShiLi && !this.DoGameEnd() && this.reDoDragEndCoroutine == null)
 		{
 			// ´ý¿¼ÂÇ
-			//this.reDoDragEndCoroutine = base.StartCoroutine(this.ReDoDragEnd(ic));
+			this.reDoDragEndCoroutine = base.StartCoroutine(this.ReDoDragEnd(ic));
 		}
 	}
 

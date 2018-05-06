@@ -29,6 +29,12 @@ public class ImageControl : MonoBehaviour
 
 	private DieJiaControl dieJiaControl;
 
+	public ImageData image_data;
+
+	public void SetImageData(ImageData data)
+	{
+		this.image_data = data;
+	}
 
 	public void SetImage(int imageIndex, DieJiaControl dieJiaControl)
 	{
@@ -100,6 +106,12 @@ public class ImageControl : MonoBehaviour
 		Profiler.BeginSample("----------DoGame");
 		this.dieJiaControl.DoGame();
 		Profiler.EndSample();
+	}
+
+	public void DragToPos(Vector3 positon)
+	{
+		base.transform.localPosition = positon;
+		this.dieJiaControl.DoGame();
 	}
 
 	public void OnDragEnd()

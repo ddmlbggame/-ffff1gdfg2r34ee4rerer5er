@@ -10,6 +10,7 @@ public enum ImageType : byte
 	ChangFangXing1,
 	ChangFangXing2,
 	LingXing,
+	BigLingXing1,
 	BigZhengFangXing,
 	ChangFangXingLeft1,
 	ChangFangXingRight1,
@@ -22,5 +23,21 @@ public enum ImageType : byte
 	ParallelogramLong2,
 	ParallelogramLong3,
 	ParallelogramLong4,
+
+	TiXing1,
+	TiXing2,
+	TiXing3,
+	TiXing4,
+
+	BigSangJiaoXing1,
+	BigSangJiaoXing2,
+	BigSangJiaoXing3,
+	BigSangJiaoXing4,
+
+	BigChangFangXing1,
+	BigChangFangXing2,
+
+	BigChangFangXing3,
+	BigChangFangXing4,
 
 }
