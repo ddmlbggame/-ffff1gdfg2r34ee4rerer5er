@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class EditPanel : MonoBehaviour
 {
 	public Transform baseImageGrid;
