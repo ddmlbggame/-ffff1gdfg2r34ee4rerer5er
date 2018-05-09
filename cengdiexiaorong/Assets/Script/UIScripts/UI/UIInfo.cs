@@ -20,7 +20,8 @@ public  class UIInfo  {
 
 public enum UIType
 {
-	UIMain,
+	Login,
+	Buy,
 }
 
 public enum UIHierarchyType

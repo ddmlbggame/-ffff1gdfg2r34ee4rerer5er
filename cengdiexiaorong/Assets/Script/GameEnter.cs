@@ -8,6 +8,8 @@ public class GameEnter : MonoBehaviour {
 	{
 		DontDestroyOnLoad(this.gameObject);
 		UIManager.Instance._Init(this.transform);
+		UIManager.Instance.PushShow(UILogin.Info, false);
+		//UIManager.Instance.PushShow(UIBuy.Info, false);
 	}
-	
+
 }

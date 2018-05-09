@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UIBase : MonoBehaviour {
 
-	//public static UIInfo Info = new UIInfo(UIType.UIMain , UIHierarchyType.Normal );
 
 	public virtual void OnEnable () {
 		

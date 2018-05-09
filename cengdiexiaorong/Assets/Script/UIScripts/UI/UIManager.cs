@@ -17,12 +17,15 @@ public  class UIManager {
 			return _instance;
 		}
 	}
+	public const string UIRootPath = "UI/CharactorTran/Prefab/";
 
 	private GameObject _canvas;
 
-	public Canvas Dialog;
+	public Transform Dialog;
 
-	public Canvas Normal;
+	public Transform Normal;
+
+	public Transform Game;
 
 	private Stack<UIBase> ui_queue = new Stack<UIBase>();
 
@@ -40,8 +43,9 @@ public  class UIManager {
 		this._canvas.transform.localPosition = Vector3.zero;
 		this._canvas.transform.localScale = Vector3.one;
 		this._canvas.transform.localRotation = Quaternion.identity;
-		this.Dialog = this._canvas.transform.FindChild("Dialog").GetComponent<Canvas>();
-		this.Normal = this._canvas.transform.FindChild("Normal").GetComponent<Canvas>();
+		this.Dialog = this._canvas.transform.FindChild("Dialog").transform;
+		this.Normal = this._canvas.transform.FindChild("Normal").transform;
+		this.Game = this._canvas.transform.FindChild("Game").transform;
 	}
 
 	public void PushShow(UIInfo info , bool is_push = false)
@@ -53,17 +57,34 @@ public  class UIManager {
 		}
 		else
 		{
-			var ui_obj = Resources.Load(info.Path);
+			var ui_obj = Resources.Load(UIManager.UIRootPath +info.Path);
 			if (ui_obj != null)
 			{
 				GameObject ui_game_obj = GameObject.Instantiate(ui_obj) as GameObject;
 				ui = ui_game_obj.GetComponent<UIBase>();
-			}else
+				this.ui_dictionary.Add(info, ui);
+			}
+			else
 			{
 				Debug.LogError("can't load ui path =" + info.Path);
 			}
 	
 		}
+		Transform parent = null;
+		switch (info.UI_Hierarchy_Type)
+		{
+			case UIHierarchyType.Normal:
+				parent = this.Normal.transform;
+				break;
+			case UIHierarchyType.Dialog:
+				parent = this.Dialog.transform;
+				break;
+		}
+		ui.transform.SetParent(parent);
+		ui.transform.localScale = Vector3.one;
+		ui.transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
+		ui.transform.GetComponent<RectTransform>().localRotation = Quaternion.identity;
+
 		this._current_ui = ui;
 		if (is_push)
 		{
