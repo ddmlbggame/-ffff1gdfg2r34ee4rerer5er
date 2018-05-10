@@ -31,8 +31,6 @@ public class GameScene : MonoBehaviour
 
 	public DieJiaControl Fixed_Figure_Control;
 
-	public Text jinDuText;
-
 	private Coroutine gameScoreCoroutine;
 
 	private float gameStartTime;
@@ -60,9 +58,6 @@ public class GameScene : MonoBehaviour
 
 	private void Start()
 	{
-		this.RefreshJinDu(CommonConfiguration.currentLevel);
-		//this.startPanel.ShowPanel(false);
-		//base.StartCoroutine(this.ShowFPS());
 		GameScene.gameSceneInsta.SetGameStart(2);
 	}
 
@@ -210,29 +205,6 @@ public class GameScene : MonoBehaviour
 		this.Operational_Figure_Control.imageList.Clear();
 	}
 
-	public void RefreshJinDu(int currentLevel)
-	{
-		if (currentLevel > CommonConfiguration.gameLevelPostions.Count)
-		{
-			this.jinDuText.text = string.Concat(new object[]
-			{
-				"总进度 ",
-				CommonConfiguration.gameLevelPostions.Count,
-				"/",
-				CommonConfiguration.gameLevelPostions.Count
-			});
-		}
-		else
-		{
-			this.jinDuText.text = string.Concat(new object[]
-			{
-				"总进度 ",
-				currentLevel,
-				"/",
-				CommonConfiguration.gameLevelPostions.Count
-			});
-		}
-	}
 
 	public void CreateImageOnCaoZuoPan(ImageData image_data)
 	{
@@ -314,7 +286,7 @@ public class GameScene : MonoBehaviour
 			Vector3 vector = new Vector3(-num + (float)num6 * num2, num - (float)num5 * num2, 0f);
 			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.preDian, parentTransfrom);
 			gameObject.transform.localPosition = vector;
-			gameObject.transform.localScale = Vector3.one * 0.1f;/* parentTransfrom.localScale;*/
+			gameObject.transform.localScale = Vector3.one ;/* parentTransfrom.localScale;*/
 			list.Add(gameObject);
 		}
 		return list;
@@ -406,8 +378,6 @@ public class GameScene : MonoBehaviour
 		if (GUI.Button(new Rect(0, 100, 200, 50), "开始"))
 		{
 			GameScene.gameSceneInsta.SetGameStart(int.Parse(sceneid));
-			this.RefreshJinDu(CommonConfiguration.currentLevel);
-			
 		}
 
 		if (GUI.Button(new Rect(0, 250, 200, 50), "提示"))

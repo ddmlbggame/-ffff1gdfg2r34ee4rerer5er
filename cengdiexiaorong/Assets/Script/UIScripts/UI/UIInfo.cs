@@ -20,6 +20,7 @@ public  class UIInfo  {
 
 public enum UIType
 {
+	Main,
 	Login,
 	Buy,
 }
