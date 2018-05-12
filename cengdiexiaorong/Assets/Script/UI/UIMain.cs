@@ -89,14 +89,19 @@ public class UIMain : UIBase {
 		this._level.text = string.Format("完成 {0}关", GameControl.Instance.game_data.ChallangePassedNumber);
 	}
 	private IEnumerator _count_time = null;
-	YieldInstruction wait = new WaitForSeconds(0.25f);
+	YieldInstruction wait = new WaitForSeconds(0.125f);
 	private IEnumerator _CountTime()
 	{
 		float time = 0;
-		while (GameControl.Instance.game_data.ChallangeRestTime >= 0)
+		while (GameControl.Instance.game_data.ChallangeRestTime > 0)
 		{
 			this._time.text = GameControl.Instance.game_data.ChallangeRestTime.ToString();
 			yield return wait;
+			if (GameControl.Instance.game_data.ChallangeRestTime <= 2)
+			{
+				kaca++;
+				PlayKaCa();
+			}
 			yield return wait;
 			if (GameControl.Instance.game_data.ChallangeRestTime <= 4)
 			{
@@ -104,6 +109,35 @@ public class UIMain : UIBase {
 				PlayKaCa();
 			}
 			yield return wait;
+			if (GameControl.Instance.game_data.ChallangeRestTime <= 2)
+			{
+				kaca++;
+				PlayKaCa();
+			}
+			yield return wait;
+			if (GameControl.Instance.game_data.ChallangeRestTime <= 9)
+			{
+				kaca++;
+				PlayKaCa();
+			}
+			yield return wait;
+			if (GameControl.Instance.game_data.ChallangeRestTime <= 2)
+			{
+				kaca++;
+				PlayKaCa();
+			}
+			yield return wait;
+			if (GameControl.Instance.game_data.ChallangeRestTime <= 4)
+			{
+				kaca++;
+				PlayKaCa();
+			}
+			yield return wait;
+			if (GameControl.Instance.game_data.ChallangeRestTime <= 2)
+			{
+				kaca++;
+				PlayKaCa();
+			}
 			yield return wait;
 			kaca++;
 			GameControl.Instance.game_data.ChallangeRestTime--;
@@ -113,6 +147,7 @@ public class UIMain : UIBase {
 			}
 
 		}
+		this._time.text = GameControl.Instance.game_data.ChallangeRestTime.ToString();
 		// 游戏结束
 		GameControl.Instance.ChallangeGameFinshed();
 	}

@@ -70,6 +70,11 @@ public class GameData {
 		var levels = _InitLevel();
 		for (int i = 0; i < levels.Length; i++)
 		{
+			//Debug.LogError(levels[i].ToString());
+			//if (string.IsNullOrEmpty(levels[i].ToString()))
+			//{
+			//	continue;
+			//}
 			char[] split = { ',',';' ,'|'};
 			string[] array = levels[i].ToString().Split(split);
 			LevelData level_data = new LevelData();
@@ -158,7 +163,8 @@ public class GameData {
 
 	public static int GetPassedLevel(LevelDifficulty level_difficulty)
 	{
-
+		// todo lingshi 
+		return 100;
 		int passed_level =  PlayerPrefs.GetInt(Enum.GetName(typeof(LevelDifficulty),level_difficulty));
 		if (passed_level <= 0)
 		{
