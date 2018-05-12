@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class GameScene : MonoBehaviour
 {
-	public static GameScene gameSceneInsta;
+	public static GameScene Instance;
 
 	public Canvas canvas;
 
@@ -40,7 +40,7 @@ public class GameScene : MonoBehaviour
 	{
 		this.canvas = UIManager.Instance.canvas;
 		Operational_Figure = this.Operational_Figure_Control.GetComponent<RectTransform>();
-		GameScene.gameSceneInsta = this;
+		GameScene.Instance = this;
 		Screen.sleepTimeout = -1;
 		CommonConfiguration.InitGameData();
 		GameControl.Instance.game_data.Init();
@@ -171,9 +171,12 @@ public class GameScene : MonoBehaviour
 		this.CreateImageOnShiLiPan(level_data);
 	}
 
-	public void SetGameStart()
+	public void SetGameStart(bool playsound = true)
 	{
-		FSoundManager.PlayMusic("Background");
+		if (playsound)
+		{
+			FSoundManager.PlayMusic("Background");
+		}
 		this.gameStartTime = Time.realtimeSinceStartup;
 		GameControl.Instance.game_data.isGamePlay = true;
 		var level_data = GameControl.Instance.game_data.GetLevelData(GameControl.Instance.game_data.currentGameLevel, GameControl.Instance.game_data.Current_Difficulty);
@@ -352,6 +355,7 @@ public class GameScene : MonoBehaviour
 		}
 		UnityEngine.Debug.Log("----移动完成");
 		GameControl.Instance.game_data.doing_show_tip = false;
+		GameScene.Instance.SetGameStart(false);
 	}
 
 	private string sceneid = "";
@@ -364,13 +368,13 @@ public class GameScene : MonoBehaviour
 		GUILayout.EndHorizontal();
 		if (GUI.Button(new Rect(0, 100, 200, 50), "开始"))
 		{
-			GameScene.gameSceneInsta.SetGameStart(int.Parse(sceneid));
+			GameScene.Instance.SetGameStart(int.Parse(sceneid));
 		}
 
-		if (GUI.Button(new Rect(0, 250, 200, 50), "提示"))
-		{
-			ShowTip();
-		}
+		//if (GUI.Button(new Rect(0, 250, 200, 50), "提示"))
+		//{
+		//	ShowTip();
+		//}
 	}
 
 }

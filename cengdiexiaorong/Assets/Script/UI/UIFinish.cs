@@ -25,7 +25,7 @@ public class UIFinish : UIBase {
 	private void OnClickRestart(GameObject obj)
 	{
 		UIManager.Instance.Hide(Info);
-		GameScene.gameSceneInsta.SetGameStart();
+		GameScene.Instance.SetGameStart();
 		GameControl.HandleRestartEvent();
 	}
 }

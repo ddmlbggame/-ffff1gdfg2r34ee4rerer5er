@@ -273,9 +273,9 @@ public class DieJiaControl : MonoBehaviour
 	{
 		int num = -2147483648;
 		List<int> list = new List<int>();
-		for (int i = 0; i < GameScene.gameSceneInsta.Operational_Figure_Control.newColors.Length; i++)
+		for (int i = 0; i < GameScene.Instance.Operational_Figure_Control.newColors.Length; i++)
 		{
-			if (GameScene.gameSceneInsta.Operational_Figure_Control.newColors[i].a == 255f)
+			if (GameScene.Instance.Operational_Figure_Control.newColors[i].a == 255f)
 			{
 				if (num == -2147483648)
 				{
@@ -288,9 +288,9 @@ public class DieJiaControl : MonoBehaviour
 
 		int num2 = -2147483648;
 		List<int> list2 = new List<int>();
-		for (int j = 0; j < GameScene.gameSceneInsta.Fixed_Figure_Control.newColors.Length; j++)
+		for (int j = 0; j < GameScene.Instance.Fixed_Figure_Control.newColors.Length; j++)
 		{
-			if (GameScene.gameSceneInsta.Fixed_Figure_Control.newColors[j].a == 255f)
+			if (GameScene.Instance.Fixed_Figure_Control.newColors[j].a == 255f)
 			{
 				if (num2 == -2147483648)
 				{

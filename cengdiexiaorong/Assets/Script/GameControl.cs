@@ -50,7 +50,7 @@ public  class GameControl {
 		GameControl.Instance.game_data.Current_Difficulty = level_difficulty;
 		GameControl.Instance.game_data._current_game_type = type;
 		UIManager.Instance.PushShow(UIMain.Info,true);
-		GameScene.gameSceneInsta.SetGameStart();
+		GameScene.Instance.SetGameStart();
 	}
 
 

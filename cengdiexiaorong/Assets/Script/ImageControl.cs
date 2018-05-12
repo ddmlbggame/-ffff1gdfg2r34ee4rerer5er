@@ -67,7 +67,7 @@ public class ImageControl : MonoBehaviour
 		this.StartDragPosition = base.transform.localPosition;
 		base.transform.SetAsLastSibling();
 		Vector2 one = Vector2.one;
-		RectTransformUtility.ScreenPointToLocalPointInRectangle(GameScene.gameSceneInsta.Operational_Figure, Input.mousePosition, GameScene.gameSceneInsta.canvas.worldCamera, out one);
+		RectTransformUtility.ScreenPointToLocalPointInRectangle(GameScene.Instance.Operational_Figure, Input.mousePosition, GameScene.Instance.canvas.worldCamera, out one);
 		this.deltaPosition = new Vector2(base.transform.localPosition.x, base.transform.localPosition.y) - one;
 	}
 
@@ -88,7 +88,7 @@ public class ImageControl : MonoBehaviour
 		//}
 		//frame_count++;
 		Vector2 one = Vector2.one;
-		RectTransformUtility.ScreenPointToLocalPointInRectangle(GameScene.gameSceneInsta.Operational_Figure, input_position, GameScene.gameSceneInsta.canvas.worldCamera, out one);
+		RectTransformUtility.ScreenPointToLocalPointInRectangle(GameScene.Instance.Operational_Figure, input_position, GameScene.Instance.canvas.worldCamera, out one);
 		if (_last_input_position == Vector2.zero)
 		{
 			_last_input_position = one;

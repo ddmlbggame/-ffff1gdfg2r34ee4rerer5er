@@ -18,10 +18,10 @@ public class EditPanel : MonoBehaviour
 	{
 		string text;
 		text = this.Level + "|" + (int)this.Level_Difficulty;
-		for (int i = 0; i < GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Count; i++)
+		for (int i = 0; i < GameScene.Instance.Operational_Figure_Control.imageList.Count; i++)
 		{
 			
-			ImageControl imageControl = GameScene.gameSceneInsta.Operational_Figure_Control.imageList[i];
+			ImageControl imageControl = GameScene.Instance.Operational_Figure_Control.imageList[i];
 			if (image_datas.ContainsKey(imageControl))
 			{
 				text += ";" + image_datas[imageControl].index + "," + image_datas[imageControl].pos.x + "," + image_datas[imageControl].pos.y;
@@ -70,15 +70,15 @@ public class EditPanel : MonoBehaviour
 		
 		image_datas.Clear();
 		ImageControl first_image = null;
-		for (int i = 0; i < GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Count; i++)
+		for (int i = 0; i < GameScene.Instance.Operational_Figure_Control.imageList.Count; i++)
 		{
 			imagedata data = new imagedata();
-			ImageControl imageControl = GameScene.gameSceneInsta.Operational_Figure_Control.imageList[i];
+			ImageControl imageControl = GameScene.Instance.Operational_Figure_Control.imageList[i];
 			if(first_image == null)
 			{
 				first_image = imageControl;
 			}
-			var pos = GameScene.gameSceneInsta.Operational_Figure_Control.showTextureGo.transform.localPosition - first_image.transform.localPosition;
+			var pos = GameScene.Instance.Operational_Figure_Control.showTextureGo.transform.localPosition - first_image.transform.localPosition;
 			data.index = imageControl.imageIndex;
 			data.pos = imageControl.transform.localPosition + pos;
 			image_datas.Add(imageControl,data);
@@ -124,13 +124,13 @@ public class EditPanel : MonoBehaviour
 
 	public void AddOneTypeImage()
 	{
-		GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Clear();
+		GameScene.Instance.Operational_Figure_Control.imageList.Clear();
 		foreach (var item in this.images)
 		{
-			GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Add(item.Value);
+			GameScene.Instance.Operational_Figure_Control.imageList.Add(item.Value);
 		}
-		int num = GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Count / 2;
-		int num2 = GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Count % 2;
+		int num = GameScene.Instance.Operational_Figure_Control.imageList.Count / 2;
+		int num2 = GameScene.Instance.Operational_Figure_Control.imageList.Count % 2;
 		Vector2 position = new Vector2((float)(-60 + 120 * num2), (float)(-80 - num * 120));
 		var image_control = this._CreateImageOnCaoZuoPan(new ImageData() ,(int)this.ImageType , Vector2.zero);
 		this.images.Add(image_control, image_control);
@@ -138,7 +138,7 @@ public class EditPanel : MonoBehaviour
 
 	public void RemoveSelectedImage(ImageControl image_control)
 	{
-		GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Clear();
+		GameScene.Instance.Operational_Figure_Control.imageList.Clear();
 		if (this.images.ContainsKey(image_control))
 		{
 			this.images.Remove(image_control);
@@ -146,14 +146,14 @@ public class EditPanel : MonoBehaviour
 		GameObject.DestroyImmediate(image_control.gameObject);
 		foreach (var item in this.images)
 		{
-			GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Add(item.Value);
+			GameScene.Instance.Operational_Figure_Control.imageList.Add(item.Value);
 		}
-		GameScene.gameSceneInsta.Operational_Figure_Control.DoGame();
+		GameScene.Instance.Operational_Figure_Control.DoGame();
 	}
 
 	private ImageControl _CreateImageOnCaoZuoPan(ImageData data, int baseImageIndex ,Vector2 pos)
 	{
-		return GameScene.gameSceneInsta.Operational_Figure_Control.CreateBaseImage(data ,baseImageIndex, pos, false);
+		return GameScene.Instance.Operational_Figure_Control.CreateBaseImage(data ,baseImageIndex, pos, false);
 	}
 
 	public void OnInit()
@@ -162,12 +162,12 @@ public class EditPanel : MonoBehaviour
 		{
 			this.images = new Dictionary<ImageControl, ImageControl>();
 		}
-		foreach (ImageControl current in GameScene.gameSceneInsta.Operational_Figure_Control.imageList)
+		foreach (ImageControl current in GameScene.Instance.Operational_Figure_Control.imageList)
 		{
 			UnityEngine.Object.DestroyImmediate(current.gameObject);
 		}
-		GameScene.gameSceneInsta.Operational_Figure_Control.imageList.Clear();
-		GameScene.gameSceneInsta.Operational_Figure_Control.DoGame();
+		GameScene.Instance.Operational_Figure_Control.imageList.Clear();
+		GameScene.Instance.Operational_Figure_Control.DoGame();
 	}
 
 	public struct imagedata
