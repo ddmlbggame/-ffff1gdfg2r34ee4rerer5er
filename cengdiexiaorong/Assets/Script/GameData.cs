@@ -26,6 +26,14 @@ public class GameData {
 
 	public bool isGamePlay = false;
 
+	public static string[] CurrentPassedLevel = {
+		Enum.GetName(typeof(LevelDifficulty), LevelDifficulty.Simple),
+		Enum.GetName(typeof(LevelDifficulty), LevelDifficulty.Normal),
+		Enum.GetName(typeof(LevelDifficulty), LevelDifficulty.Hard),
+		Enum.GetName(typeof(LevelDifficulty), LevelDifficulty.Abnormal) };
+
+	private static int[] CurrentPassedSimpleLevel = new int[4];
+
 	public void Init()
 	{
 		this.simple_level_datas = new Dictionary<int, LevelData>();
@@ -114,6 +122,51 @@ public class GameData {
 			return datas[level];
 		}
 		return null;
+	}
+
+	public Dictionary<int, LevelData> GetLevelDatas(LevelDifficulty level_difficult)
+	{
+		Dictionary<int, LevelData> datas = null;
+		switch (level_difficult)
+		{
+			case LevelDifficulty.Simple:
+				datas = simple_level_datas;
+				break;
+			case LevelDifficulty.Normal:
+				datas = normal_level_datas;
+				break;
+			case LevelDifficulty.Hard:
+				datas = hard_level_datas;
+				break;
+			case LevelDifficulty.Abnormal:
+				datas = _abnormal_level_datas;
+				break;
+		}
+		return datas;
+	}
+
+
+	public static int GetPassedLevel(LevelDifficulty level_difficulty)
+	{
+
+		int passed_level =  PlayerPrefs.GetInt(Enum.GetName(typeof(LevelDifficulty),level_difficulty));
+		if (passed_level <= 0)
+		{
+			return 1;
+		}
+		if (CurrentPassedSimpleLevel[(int)level_difficulty] <= 0)
+		{
+			CurrentPassedSimpleLevel[(int)level_difficulty] = passed_level;
+		}else
+		{
+			return CurrentPassedSimpleLevel[(int)level_difficulty];
+		}
+		
+		return passed_level;
+	}
+	public static void SetPassedLevel(LevelDifficulty level_difficulty ,int level)
+	{
+		PlayerPrefs.SetInt(Enum.GetName(typeof(LevelDifficulty), level_difficulty), level);
 	}
 
 }

@@ -22,12 +22,12 @@ public class UILogin : UIBase {
 
 	private void _OnClickCustom(GameObject obj)
 	{
-		GameControl.Instance.PlayGame(GameType.Custom, LevelDifficulty.Simple, 1);
+		UIManager.Instance.PushShow(UILevel.Info,true);
 	}
 
 	private void _OnClickRace(GameObject obj)
 	{
-		GameControl.Instance.PlayGame(GameType.challenge, LevelDifficulty.Simple, 1);
+		UIManager.Instance.PushShow(UILevel.Info, true);
 	}
 
 	private void _OnClickSetting(GameObject obj)
