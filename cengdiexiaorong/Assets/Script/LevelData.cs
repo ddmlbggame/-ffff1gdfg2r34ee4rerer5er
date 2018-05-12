@@ -9,6 +9,7 @@ public class LevelData {
 
 	public List<ImageData> ImageDatas;
 
+	public bool IsPassed = false;
 }
 
 public struct ImageData

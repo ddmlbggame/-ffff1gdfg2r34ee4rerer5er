@@ -8,6 +8,8 @@ public class AudioControl : MonoBehaviour {
 
 	public AudioClip success;
 
+	public AudioClip background;
+
 	public void PlayAudio(SoundType type )
 	{
 		AudioClip clip = null;
@@ -19,9 +21,15 @@ public class AudioControl : MonoBehaviour {
 		}
 		this.audioSource.PlayOneShot(clip);
 	}
+
+	public void Play()
+	{
+
+	}
 }
 
 public enum SoundType
 {
 	success,
+	background,
 }

@@ -25,6 +25,7 @@ public enum UIType
 	Buy,
 	Pause,
 	Finish,
+	Level,
 }
 
 public enum UIHierarchyType
