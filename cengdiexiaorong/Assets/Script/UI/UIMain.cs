@@ -90,14 +90,14 @@ public class UIMain : UIBase {
 	private IEnumerator _count_time = null;
 	private IEnumerator _CountTime()
 	{
-		while (GameControl.Instance.game_data.ChallangeRestTime > 0)
+		while (GameControl.Instance.game_data.ChallangeRestTime >= 0)
 		{
 			this._time.text = GameControl.Instance.game_data.ChallangeRestTime.ToString();
 			yield return new WaitForSeconds(1);
 			GameControl.Instance.game_data.ChallangeRestTime--;
 		}
 		// 游戏结束
-		GameControl.Instance.DoGameOver();
+		GameControl.Instance.ChallangeGameFinshed();
 	}
 
 	private IEnumerator _custom_count_time = null;

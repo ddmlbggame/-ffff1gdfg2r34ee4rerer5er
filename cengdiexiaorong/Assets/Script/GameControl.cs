@@ -92,20 +92,19 @@ public  class GameControl {
 		}
 		else
 		{
-			if (GameControl.Instance.game_data.ChallangeRestTime > 0)
-			{
-				GameControl.Instance.game_data.ChallangePassedNumber++;
-				HandleFinishChallangeOneEvent();
-				game_data.SetRandomLevel();
-				GameScene.Instance.SetGameStart(false);
-			}else
-			{
-				FSoundManager.StopMusic();
-				UIManager.Instance.PushShow(UIFinish.Info);
-			}
-		
+			GameControl.Instance.game_data.ChallangePassedNumber++;
+			GameControl.Instance.game_data.ChallangeRestTime = GameControl.Instance.game_data.ChallangeTime;
+			HandleFinishChallangeOneEvent();
+			game_data.SetRandomLevel();
+			GameScene.Instance.SetGameStart(false);
+
 		}
 		
 	}
 
+	public void ChallangeGameFinshed()
+	{
+		FSoundManager.StopMusic();
+		UIManager.Instance.PushShow(UIFinish.Info);
+	}
 }

@@ -44,10 +44,11 @@ public class GameScene : MonoBehaviour
 		Screen.sleepTimeout = -1;
 		CommonConfiguration.InitGameData();
 		GameControl.Instance.game_data.Init();
-		this.Operational_Figure_Control.dianList = this.CreateDian(this.caoZuoPanTransfrom ,2);
-		this.CreateDian(this.shiLiTransfrom,2);
+		this.Operational_Figure_Control.dianList = this.CreateDian(this.caoZuoPanTransfrom, 2);
+		this.CreateDian(this.shiLiTransfrom, 2);
 		this.Fixed_Figure_Control.dianList = this.Operational_Figure_Control.dianList;
 	}
+
 
 	//private void Start()
 	//{
