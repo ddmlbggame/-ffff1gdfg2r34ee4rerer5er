@@ -13,10 +13,6 @@ public class GameScene : MonoBehaviour
 {
 	public static GameScene gameSceneInsta;
 
-	public AudioSource audioSource;
-
-	public AudioClip success;
-
 	public Canvas canvas;
 
 	public Transform caoZuoPanTransfrom;
@@ -35,8 +31,6 @@ public class GameScene : MonoBehaviour
 
 	private float gameStartTime;
 
-	private bool isGamePlay;
-
 	private ImageControl currentSelectImage;
 
 	public bool isLimitGame = true;
@@ -45,28 +39,28 @@ public class GameScene : MonoBehaviour
 
 	private void Awake()
 	{
-		//Analytics.StartWithAppKeyAndChannelId("5a5f086da40fa30870000130", enChannelId.TapTap.ToString());
+		this.canvas = UIManager.Instance.canvas;
 		Operational_Figure = this.Operational_Figure_Control.GetComponent<RectTransform>();
 		GameScene.gameSceneInsta = this;
 		Screen.sleepTimeout = -1;
 		CommonConfiguration.InitGameData();
-		GameData.Instance.Init();
+		GameControl.Instance.game_data.Init();
 		this.Operational_Figure_Control.dianList = this.CreateDian(this.caoZuoPanTransfrom ,2);
 		this.CreateDian(this.shiLiTransfrom,2);
 		this.Fixed_Figure_Control.dianList = this.Operational_Figure_Control.dianList;
 	}
 
-	private void Start()
-	{
-		GameScene.gameSceneInsta.SetGameStart(2);
-	}
+	//private void Start()
+	//{
+	//	GameScene.gameSceneInsta.SetGameStart(2);
+	//}
 
 	private void Update()
 	{
-		if (this.isGamePlay)
+		if (GameControl.Instance.game_data.isGamePlay)
 		{
 			// 如果正在提示中
-			if (GameData.Instance.doing_show_tip)
+			if (GameControl.Instance.game_data.doing_show_tip)
 			{
 				return;
 			}
@@ -168,21 +162,20 @@ public class GameScene : MonoBehaviour
 
 	public void SetGameStart(int currentLevel , LevelDifficulty level_difficulty = LevelDifficulty.Simple)
 	{
-		GameData.Instance.currentGameLevel = currentLevel;
-		GameData.Instance.Current_Difficulty = level_difficulty;
+		GameControl.Instance.game_data.currentGameLevel = currentLevel;
+		GameControl.Instance.game_data.Current_Difficulty = level_difficulty;
 		this.gameStartTime = Time.realtimeSinceStartup;
-		this.isGamePlay = true;
-		//foreach (ImageControl current in this.Operational_Figure_Control.imageList)
-		//{
-		//	UnityEngine.Object.Destroy(current.gameObject);
-		//}
-		//this.Operational_Figure_Control.imageList.Clear();
-		//var level_data = GameData.Instance.GetLevelData(currentLevel, level_difficulty);
-		//for (int i = 0; i < level_data.ImageDatas.Count; i++)
-		//{
-		//	this.CreateImageOnCaoZuoPan(level_data.ImageDatas[i]);
-		//}
-		var level_data = GameData.Instance.GetLevelData(currentLevel, level_difficulty);
+		GameControl.Instance.game_data.isGamePlay = true;
+		var level_data = GameControl.Instance.game_data.GetLevelData(currentLevel, level_difficulty);
+		this.CreateOperationalImage(level_data);
+		this.CreateImageOnShiLiPan(level_data);
+	}
+
+	public void SetGameStart()
+	{
+		this.gameStartTime = Time.realtimeSinceStartup;
+		GameControl.Instance.game_data.isGamePlay = true;
+		var level_data = GameControl.Instance.game_data.GetLevelData(GameControl.Instance.game_data.currentGameLevel, GameControl.Instance.game_data.Current_Difficulty);
 		this.CreateOperationalImage(level_data);
 		this.CreateImageOnShiLiPan(level_data);
 	}
@@ -315,18 +308,11 @@ public class GameScene : MonoBehaviour
 	//	}
 	//	return list;
 	//}
-	public void DoGameOver()
-	{
-		this.isGamePlay = false;
-		UnityEngine.Debug.Log("Finished");
-		//this.startPanel.ShowPanel(true);
-		this.audioSource.PlayOneShot(this.success);
-	}
 
 	public void ShowTip()
 	{
-		GameData.Instance.doing_show_tip = true;
-		var level_data = GameData.Instance.GetLevelData(GameData.Instance.currentGameLevel, GameData.Instance.Current_Difficulty);
+		GameControl.Instance.game_data.doing_show_tip = true;
+		var level_data = GameControl.Instance.game_data.GetLevelData(GameControl.Instance.game_data.currentGameLevel, GameControl.Instance.game_data.Current_Difficulty);
 		this.CreateOperationalImage(level_data);
 		//if(MoveIEnumerator == null)
 		//{
@@ -364,7 +350,7 @@ public class GameScene : MonoBehaviour
 			yield return new WaitUntil(()=>is_done == true);
 		}
 		UnityEngine.Debug.Log("----移动完成");
-		GameData.Instance.doing_show_tip = false;
+		GameControl.Instance.game_data.doing_show_tip = false;
 	}
 
 	private string sceneid = "";

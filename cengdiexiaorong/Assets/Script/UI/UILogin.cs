@@ -10,21 +10,29 @@ public class UILogin : UIBase {
 
 	public GameObject _race_game;
 
+	public GameObject _setting;
+
 	public override void OnEnable()
 	{
 		base.OnEnable();
 		EventTriggerListener.Get(this._custom_game).onClick = this._OnClickCustom;
 		EventTriggerListener.Get(this._race_game).onClick = this._OnClickRace;
+		EventTriggerListener.Get(this._setting).onClick = this._OnClickSetting;
 	}
 
 	private void _OnClickCustom(GameObject obj)
 	{
-		Debug.Log("_OnClickCustom");
-		UIManager.Instance.Hide(UILogin.Info);
+		GameControl.Instance.PlayGame(GameType.Custom, LevelDifficulty.Simple, 1);
 	}
 
 	private void _OnClickRace(GameObject obj)
 	{
-		Debug.Log("_OnClickRace");
+		GameControl.Instance.PlayGame(GameType.challenge, LevelDifficulty.Simple, 1);
 	}
+
+	private void _OnClickSetting(GameObject obj)
+	{
+		UIManager.Instance.PushShow(UIPause.Info);
+	}
+	
 }

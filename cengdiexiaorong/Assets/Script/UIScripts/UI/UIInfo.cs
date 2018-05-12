@@ -23,6 +23,8 @@ public enum UIType
 	Main,
 	Login,
 	Buy,
+	Pause,
+	Finish,
 }
 
 public enum UIHierarchyType

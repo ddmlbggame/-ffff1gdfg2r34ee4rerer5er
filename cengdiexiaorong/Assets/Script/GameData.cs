@@ -20,19 +20,11 @@ public class GameData {
 
 	public LevelDifficulty Current_Difficulty = LevelDifficulty.Simple;
 
-	private static GameData _instance;
+	public GameType _current_game_type;
 
-	public static GameData Instance
-	{
-		get
-		{
-			if(_instance == null)
-			{
-				_instance = new GameData();
-			}
-			return _instance;
-		}
-	}
+	public int ChallangeTime = 360;
+
+	public bool isGamePlay = false;
 
 	public void Init()
 	{
@@ -124,4 +116,10 @@ public class GameData {
 		return null;
 	}
 
+}
+
+public enum GameType
+{
+	Custom,
+	challenge,
 }

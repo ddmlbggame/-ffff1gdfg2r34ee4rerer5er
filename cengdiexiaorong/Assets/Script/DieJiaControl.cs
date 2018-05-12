@@ -314,7 +314,7 @@ public class DieJiaControl : MonoBehaviour
 			}
 		}
 
-		GameScene.gameSceneInsta.DoGameOver();
+		GameControl.Instance.DoGameOver();
 		return true;
 	}
 }

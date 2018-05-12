@@ -21,6 +21,8 @@ public  class UIManager {
 
 	private GameObject _canvas;
 
+	public Canvas canvas;
+
 	public Transform Dialog;
 
 	public Transform Normal;
@@ -30,8 +32,6 @@ public  class UIManager {
 	private Stack<UIBase> ui_queue = new Stack<UIBase>();
 
 	private Dictionary<UIInfo, UIBase> ui_dictionary = new Dictionary<UIInfo, UIBase>();
-	
-	private Dictionary<UIInfo, UIBase> ui_active = new Dictionary<UIInfo, UIBase>();
 
 	private UIBase _current_ui = null;
 
@@ -39,10 +39,8 @@ public  class UIManager {
 	{
 		var canvas = Resources.Load("UI/UICanvas");
 		this._canvas = GameObject.Instantiate(canvas) as GameObject;
+		this.canvas = this._canvas.GetComponent<Canvas>();
 		this._canvas.transform.SetParent(parent);
-		this._canvas.transform.localPosition = Vector3.zero;
-		this._canvas.transform.localScale = Vector3.one;
-		this._canvas.transform.localRotation = Quaternion.identity;
 		this.Dialog = this._canvas.transform.FindChild("Dialog").transform;
 		this.Normal = this._canvas.transform.FindChild("Normal").transform;
 		this.Game = this._canvas.transform.FindChild("Game").transform;
@@ -51,25 +49,6 @@ public  class UIManager {
 	public void PushShow(UIInfo info , bool is_push = false)
 	{
 		UIBase ui = null;
-		if(this.ui_dictionary.ContainsKey(info))
-		{
-			ui = this.ui_dictionary[info];
-		}
-		else
-		{
-			var ui_obj = Resources.Load(UIManager.UIRootPath +info.Path);
-			if (ui_obj != null)
-			{
-				GameObject ui_game_obj = GameObject.Instantiate(ui_obj) as GameObject;
-				ui = ui_game_obj.GetComponent<UIBase>();
-				this.ui_dictionary.Add(info, ui);
-			}
-			else
-			{
-				Debug.LogError("can't load ui path =" + info.Path);
-			}
-	
-		}
 		Transform parent = null;
 		switch (info.UI_Hierarchy_Type)
 		{
@@ -80,23 +59,38 @@ public  class UIManager {
 				parent = this.Dialog.transform;
 				break;
 		}
-		ui.transform.SetParent(parent);
-		ui.transform.localScale = Vector3.one;
-		ui.transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
-		ui.transform.GetComponent<RectTransform>().localRotation = Quaternion.identity;
+		if (this.ui_dictionary.ContainsKey(info))
+		{
+			ui = this.ui_dictionary[info];
+		}
+		else
+		{
+			var ui_obj = Resources.Load(UIManager.UIRootPath +info.Path);
+			if (ui_obj != null)
+			{
+				GameObject ui_game_obj = GameObject.Instantiate(ui_obj , parent) as GameObject;
+				ui = ui_game_obj.GetComponent<UIBase>();
+				this.ui_dictionary.Add(info, ui);
+			}
+			else
+			{
+				Debug.LogError("can't load ui path =" + info.Path);
+			}
+	
+		}
 
-		this._current_ui = ui;
 		if (is_push)
 		{
-			ui_queue.Push(this._current_ui);
 			UIBase peek_ui = null;
 			if (this.ui_queue.Count > 0)
 			{
 				peek_ui = this.ui_queue.Peek();
-				peek_ui.Hide();
+				this._Hide(peek_ui);
 			}
+			ui_queue.Push(ui);
 		}
-		this._current_ui.Show();
+		this._current_ui = ui;
+		this._Show(ui);
 	}
 
 	public void PopShow()
@@ -104,8 +98,15 @@ public  class UIManager {
 		if (this.ui_queue.Count > 0)
 		{
 			UIBase ui = this.ui_queue.Pop();
-			this._current_ui = ui;
-			this._current_ui.Show();
+			_Hide(ui);
+			if (this.ui_queue.Count > 0)
+			{
+				UIBase peek_ui = this.ui_queue.Peek();
+				this._Show(peek_ui);
+			}else
+			{
+				Debug.Log("current ui stack count = 0");
+			}
 		}
 		else
 		{
@@ -118,7 +119,20 @@ public  class UIManager {
 		UIBase ui = null;
 		if(this.ui_dictionary.TryGetValue(info ,out ui))
 		{
-			ui.Hide();
+			_Hide(ui);
 		}
+	}
+
+	private void _Hide(UIBase uibase)
+	{
+		uibase.Hide();
+		//this._current_ui = this.ui_active.Pop();
+	}
+
+	private void _Show(UIBase uibase)
+	{
+		uibase.Show();
+		this._current_ui = uibase;
+		//this.ui_active.Push(uibase);
 	}
 }
