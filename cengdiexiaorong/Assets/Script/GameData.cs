@@ -22,7 +22,7 @@ public class GameData {
 
 	public GameType _current_game_type;
 
-	public int ChallangeTime = 61;
+	public int ChallangeTime = 11;
 
 	public bool isGamePlay = false;
 	// 挑战模式完成的关卡数

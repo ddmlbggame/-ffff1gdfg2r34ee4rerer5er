@@ -89,16 +89,45 @@ public class UIMain : UIBase {
 		this._level.text = string.Format("完成 {0}关", GameControl.Instance.game_data.ChallangePassedNumber);
 	}
 	private IEnumerator _count_time = null;
+	YieldInstruction wait = new WaitForSeconds(0.25f);
 	private IEnumerator _CountTime()
 	{
+		float time = 0;
 		while (GameControl.Instance.game_data.ChallangeRestTime >= 0)
 		{
 			this._time.text = GameControl.Instance.game_data.ChallangeRestTime.ToString();
-			yield return new WaitForSeconds(1);
+			yield return wait;
+			yield return wait;
+			if (GameControl.Instance.game_data.ChallangeRestTime <= 4)
+			{
+				kaca++;
+				PlayKaCa();
+			}
+			yield return wait;
+			yield return wait;
+			kaca++;
 			GameControl.Instance.game_data.ChallangeRestTime--;
+			if (GameControl.Instance.game_data.ChallangeRestTime <=9)
+			{
+				PlayKaCa();
+			}
+
 		}
 		// 游戏结束
 		GameControl.Instance.ChallangeGameFinshed();
+	}
+
+	int kaca = 0;
+	private void PlayKaCa()
+	{
+		if (kaca % 2 == 1)
+		{
+			FSoundManager.PlaySound("ca");
+		}
+		else
+		{
+			FSoundManager.PlaySound("ka");
+		}
 	}
 
 	private IEnumerator _custom_count_time = null;
