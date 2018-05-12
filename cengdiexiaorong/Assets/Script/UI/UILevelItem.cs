@@ -21,7 +21,7 @@ public class UILevelItem : MonoBehaviour {
 	{
 		if(this.level_data!=null && GameData.GetPassedLevel(level_data.Level_Difficulty)>= level_data.CurrentLevel)
 		{
-			GameControl.Instance.PlayGame(GameControl.Instance.game_data._current_game_type, this.level_data.Level_Difficulty, this.level_data.CurrentLevel);
+			GameControl.Instance.PlayGame( GameType.Custom, this.level_data.Level_Difficulty, this.level_data.CurrentLevel);
 		}
 	}
 

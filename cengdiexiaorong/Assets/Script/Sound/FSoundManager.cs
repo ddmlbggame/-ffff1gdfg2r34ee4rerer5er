@@ -135,6 +135,15 @@ public class FSoundManager
 		FSoundManager._gameObject = new GameObject("FSoundManager");
 		FSoundManager._musicSource = FSoundManager._gameObject.AddComponent<AudioSource>();
 		FSoundManager._soundSource = FSoundManager._gameObject.AddComponent<AudioSource>();
+		if (PlayerPrefs.HasKey("SoundMute"))
+		{
+			FSoundManager._soundSource.mute = PlayerPrefs.GetInt("SoundMute") == 1;
+		}
+		if (PlayerPrefs.HasKey("MusicMute"))
+		{
+			FSoundManager._musicSource.mute = PlayerPrefs.GetInt("MusicMute") == 1;
+		}
+
 		if (PlayerPrefs.HasKey("FSoundManager_IsAudioMuted"))
 		{
 			FSoundManager.isMuted = (PlayerPrefs.GetInt("FSoundManager_IsAudioMuted") == 1);
@@ -285,6 +294,7 @@ public class FSoundManager
 
 	public static void StopMusic()
 	{
+		Debug.Log("stop music");
 		if (FSoundManager._musicSource != null)
 		{
 			FSoundManager._musicSource.Stop();

@@ -30,8 +30,6 @@ public class UIMain : UIBase {
 	[SerializeField]
 	private Text _custom_time;
 
-	private int rest_time;
-
 
 	public override void OnEnable()
 	{
@@ -39,12 +37,14 @@ public class UIMain : UIBase {
 		EventTriggerListener.Get(this._back).onClick = this.OnClickBack;
 		EventTriggerListener.Get(this._tip).onClick = this.OnClickTip;
 		GameControl.RestartEvent += this.Show;
+		GameControl.FinishChallangeOneEvent += this.RefreshChange;
 		Show();
 	}
 	public override void OnDisable()
 	{
 		base.OnDisable();
 		GameControl.RestartEvent -= this.Show;
+		GameControl.FinishChallangeOneEvent -= this.RefreshChange;
 		if (this._count_time != null)
 		{
 			StopCoroutine(this._count_time);
@@ -59,6 +59,7 @@ public class UIMain : UIBase {
 	{
 		if (GameControl.Instance.game_data._current_game_type == GameType.challenge)
 		{
+			this._level.text = string.Format("完成 {0}关", GameControl.Instance.game_data.ChallangePassedNumber);
 			this._challange_parent.SetActive(true);
 			this._cumsom_parent.SetActive(false);
 			if (this._count_time != null)
@@ -66,7 +67,6 @@ public class UIMain : UIBase {
 				StopCoroutine(this._count_time);
 			}
 			this._count_time = _CountTime();
-			this.rest_time = GameControl.Instance.game_data.ChallangeTime;
 			StartCoroutine(this._count_time);
 		}
 		else
@@ -83,14 +83,18 @@ public class UIMain : UIBase {
 	
 	}
 
+	private void RefreshChange()
+	{
+		this._level.text = string.Format("完成 {0}关", GameControl.Instance.game_data.ChallangePassedNumber);
+	}
 	private IEnumerator _count_time = null;
 	private IEnumerator _CountTime()
 	{
-		while (this.rest_time > 0)
+		while (GameControl.Instance.game_data.ChallangeRestTime > 0)
 		{
-			this._time.text = this.rest_time.ToString();
+			this._time.text = GameControl.Instance.game_data.ChallangeRestTime.ToString();
 			yield return new WaitForSeconds(1);
-			this.rest_time--;
+			GameControl.Instance.game_data.ChallangeRestTime--;
 		}
 		// 游戏结束
 		GameControl.Instance.DoGameOver();

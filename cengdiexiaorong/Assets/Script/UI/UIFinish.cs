@@ -26,6 +26,7 @@ public class UIFinish : UIBase {
 	{
 		UIManager.Instance.Hide(Info);
 		GameScene.Instance.SetGameStart();
+		GameControl.Instance.game_data.ResetChallangeData();
 		GameControl.HandleRestartEvent();
 	}
 }

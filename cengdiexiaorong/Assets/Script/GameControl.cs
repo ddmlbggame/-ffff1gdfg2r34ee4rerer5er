@@ -17,6 +17,17 @@ public  class GameControl {
 			RestartEvent();
 		}
 	}
+
+	public static Action FinishChallangeOneEvent;
+
+	public static void HandleFinishChallangeOneEvent()
+	{
+		if (FinishChallangeOneEvent != null)
+		{
+			FinishChallangeOneEvent();
+		}
+	}
+
 	public static GameControl Instance
 	{
 		get
@@ -49,6 +60,10 @@ public  class GameControl {
 		GameControl.Instance.game_data.currentGameLevel = level;
 		GameControl.Instance.game_data.Current_Difficulty = level_difficulty;
 		GameControl.Instance.game_data._current_game_type = type;
+		if(type == GameType.challenge)
+		{
+			game_data.ResetChallangeData();
+		}
 		UIManager.Instance.PushShow(UIMain.Info,true);
 		GameScene.Instance.SetGameStart();
 	}
@@ -56,11 +71,11 @@ public  class GameControl {
 
 	public void DoGameOver()
 	{
-		FSoundManager.StopMusic();
 		game_data.isGamePlay = false;
 		UnityEngine.Debug.Log("Finished");
 		if(GameControl.Instance.game_data._current_game_type == GameType.Custom)
 		{
+			FSoundManager.StopMusic();
 			int level = GameData.GetPassedLevel(GameControl.Instance.game_data.Current_Difficulty);
 			if(GameControl.Instance.game_data.currentGameLevel == level)
 			{
@@ -72,11 +87,25 @@ public  class GameControl {
 				}
 				GameData.SetPassedLevel(GameControl.Instance.game_data.Current_Difficulty, passed);
 			}
+			FSoundManager.PlaySound("Success");
+			UIManager.Instance.PushShow(UIFinish.Info);
 		}
-		//this.startPanel.ShowPanel(true);
-		FSoundManager.PlaySound("Success");
-		//this.audio_control.PlayAudio( SoundType.success);
-		UIManager.Instance.PushShow(UIFinish.Info);
+		else
+		{
+			if (GameControl.Instance.game_data.ChallangeRestTime > 0)
+			{
+				GameControl.Instance.game_data.ChallangePassedNumber++;
+				HandleFinishChallangeOneEvent();
+				game_data.SetRandomLevel();
+				GameScene.Instance.SetGameStart(false);
+			}else
+			{
+				FSoundManager.StopMusic();
+				UIManager.Instance.PushShow(UIFinish.Info);
+			}
+		
+		}
+		
 	}
 
 }

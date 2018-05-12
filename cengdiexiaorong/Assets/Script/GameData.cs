@@ -22,9 +22,19 @@ public class GameData {
 
 	public GameType _current_game_type;
 
-	public int ChallangeTime = 360;
+	public int ChallangeTime = 61;
 
 	public bool isGamePlay = false;
+	// 挑战模式完成的关卡数
+	public int ChallangePassedNumber = 0;
+
+	public int ChallangeRestTime = 0;
+
+	public void ResetChallangeData()
+	{
+		ChallangeRestTime = ChallangeTime;
+		ChallangePassedNumber = 0;
+	}
 
 	public static string[] CurrentPassedLevel = {
 		Enum.GetName(typeof(LevelDifficulty), LevelDifficulty.Simple),
@@ -168,6 +178,12 @@ public class GameData {
 	{
 	    CurrentPassedSimpleLevel[(int)level_difficulty] = level;
 		PlayerPrefs.SetInt(Enum.GetName(typeof(LevelDifficulty), level_difficulty), level);
+	}
+
+	public void SetRandomLevel()
+	{
+		GameControl.Instance.game_data.currentGameLevel = UnityEngine.Random.Range(1, 10);
+		GameControl.Instance.game_data.Current_Difficulty = LevelDifficulty.Simple;
 	}
 
 }
