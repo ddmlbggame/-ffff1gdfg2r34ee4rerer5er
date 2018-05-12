@@ -232,7 +232,9 @@ public class DieJiaControl : MonoBehaviour
 		}
 		if(ic.imageIndex == (int)ImageType.ParallelogramLong3 || ic.imageIndex == (int)ImageType.ParallelogramLong4
 			|| ic.imageIndex == (int)ImageType.BigChangFangXing1
-			|| ic.imageIndex == (int)ImageType.BigChangFangXing3 )
+			|| ic.imageIndex == (int)ImageType.BigChangFangXing3
+			|| ic.imageIndex == (int)ImageType.BigSangJiaoXingDao1
+			|| ic.imageIndex == (int)ImageType.BigSangJiaoXingDao2)
 		{
 			if(ic.transform.localPosition.y > localPosition.y)
 			{
@@ -245,7 +247,9 @@ public class DieJiaControl : MonoBehaviour
 		}
 		else if (ic.imageIndex == (int)ImageType.ParallelogramLong1 || ic.imageIndex == (int)ImageType.ParallelogramLong2
 			|| ic.imageIndex == (int)ImageType.BigChangFangXing2
-			|| ic.imageIndex == (int)ImageType.BigChangFangXing4)
+			|| ic.imageIndex == (int)ImageType.BigChangFangXing4
+			|| ic.imageIndex == (int)ImageType.BigSangJiaoXingDao3
+			|| ic.imageIndex == (int)ImageType.BigSangJiaoXingDao4)
 		{
 			if (ic.transform.localPosition.x > localPosition.x)
 			{

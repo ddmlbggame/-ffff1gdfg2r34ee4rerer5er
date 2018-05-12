@@ -78,11 +78,25 @@ public class EditPanel : MonoBehaviour
 			{
 				first_image = imageControl;
 			}
-			var pos = GameScene.Instance.Operational_Figure_Control.showTextureGo.transform.localPosition - first_image.transform.localPosition;
+			
 			data.index = imageControl.imageIndex;
-			data.pos = imageControl.transform.localPosition + pos;
+			//var pos = GameScene.Instance.Operational_Figure_Control.showTextureGo.transform.localPosition - first_image.transform.localPosition;
+			//data.pos = imageControl.transform.localPosition + pos;
+			data.pos = imageControl.transform.localPosition;
 			image_datas.Add(imageControl,data);
+		
 		}
+		LevelData level_data = new LevelData();
+		List<ImageData> list = new List<ImageData>();
+		foreach (var item in image_datas)
+		{
+			ImageData data = new ImageData();
+			data.ImageType = (ImageType)item.Value.index;
+			data.ImagePosition = item.Value.pos;
+			list.Add(data);
+		}
+		level_data.ImageDatas = list;
+		GameScene.Instance.CreateImageOnShiLiPan(level_data);
 	}
 	//public void ShowBaseImage()
 	//{

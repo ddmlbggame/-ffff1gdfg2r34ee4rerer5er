@@ -40,4 +40,13 @@ public enum ImageType : byte
 	BigChangFangXing3,
 	BigChangFangXing4,
 
+	BigSangJiaoXingDao1,
+	BigSangJiaoXingDao2,
+	BigSangJiaoXingDao3,
+	BigSangJiaoXingDao4,
+
+	XiaoSangJiaoXingDao1,
+	XiaoSangJiaoXingDao2,
+	XiaoSangJiaoXingDao3,
+	XiaoSangJiaoXingDao4,
 }

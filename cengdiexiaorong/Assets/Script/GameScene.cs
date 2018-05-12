@@ -316,16 +316,17 @@ public class GameScene : MonoBehaviour
 
 	public void ShowTip()
 	{
+		if (GameControl.Instance.game_data.doing_show_tip)
+		{
+			return;
+		}
 		GameControl.Instance.game_data.doing_show_tip = true;
 		var level_data = GameControl.Instance.game_data.GetLevelData(GameControl.Instance.game_data.currentGameLevel, GameControl.Instance.game_data.Current_Difficulty);
 		this.CreateOperationalImage(level_data);
-		//if(MoveIEnumerator == null)
-		//{
-		//	MoveIEnumerator = Move();
-		//}else
-		//{
-		//	StopCoroutine(MoveIEnumerator);
-		//}
+		if (MoveIEnumerator != null)
+		{
+			StopCoroutine(MoveIEnumerator);
+		}
 		MoveIEnumerator = Move();
 		StartCoroutine(MoveIEnumerator);
 
@@ -350,11 +351,11 @@ public class GameScene : MonoBehaviour
 			tweener.OnStepComplete(() => 
 			{
 				is_done = true;
-				UnityEngine.Debug.Log("----移动fff");
+				//UnityEngine.Debug.Log("----移动fff");
 			});
 			yield return new WaitUntil(()=>is_done == true);
 		}
-		UnityEngine.Debug.Log("----移动完成");
+		//UnityEngine.Debug.Log("----移动完成");
 		GameControl.Instance.game_data.doing_show_tip = false;
 		GameScene.Instance.SetGameStart(false);
 	}

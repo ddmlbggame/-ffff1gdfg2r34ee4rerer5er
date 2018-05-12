@@ -8,6 +8,7 @@ public class LevelData {
 	public LevelDifficulty Level_Difficulty;
 
 	public List<ImageData> ImageDatas;
+
 }
 
 public struct ImageData

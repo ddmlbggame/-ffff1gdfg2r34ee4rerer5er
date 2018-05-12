@@ -73,6 +73,16 @@ public class CommonConfiguration
 
 		CommonConfiguration.baseImages.Add((int)ImageType.BigChangFangXing3, new BaseImage(ImageType.BigChangFangXing3, kuaiSize + kuaiBianSize * 2, 3 * kuaiSize / 2 + kuaiBianSize * 2));
 		CommonConfiguration.baseImages.Add((int)ImageType.BigChangFangXing4, new BaseImage(ImageType.BigChangFangXing4, 3 * kuaiSize / 2 + kuaiBianSize * 2,  kuaiSize + kuaiBianSize * 2));
+
+		CommonConfiguration.baseImages.Add((int)ImageType.BigSangJiaoXingDao1, new BaseImage(ImageType.BigSangJiaoXingDao1, 6 * kuaiSize / 2 + kuaiBianSize * 2, 3*kuaiSize/2 + kuaiBianSize * 2));
+		CommonConfiguration.baseImages.Add((int)ImageType.BigSangJiaoXingDao2, new BaseImage(ImageType.BigSangJiaoXingDao2, 6 * kuaiSize / 2 + kuaiBianSize * 2, 3 * kuaiSize/2 + kuaiBianSize * 2));
+		CommonConfiguration.baseImages.Add((int)ImageType.BigSangJiaoXingDao3, new BaseImage(ImageType.BigSangJiaoXingDao3, 3 * kuaiSize / 2 + kuaiBianSize * 2, 6 * kuaiSize / 2 + kuaiBianSize * 2));
+		CommonConfiguration.baseImages.Add((int)ImageType.BigSangJiaoXingDao4, new BaseImage(ImageType.BigSangJiaoXingDao4, 3 * kuaiSize / 2 + kuaiBianSize * 2, 6 * kuaiSize / 2 + kuaiBianSize * 2));
+
+		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingDao1, new BaseImage(ImageType.XiaoSangJiaoXingDao1, 4 * kuaiSize / 2 + kuaiBianSize * 2, 2 * kuaiSize / 2 + kuaiBianSize * 2));
+		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingDao2, new BaseImage(ImageType.XiaoSangJiaoXingDao2, 4 * kuaiSize / 2 + kuaiBianSize * 2, 2 * kuaiSize / 2 + kuaiBianSize * 2));
+		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingDao3, new BaseImage(ImageType.XiaoSangJiaoXingDao3, 2 * kuaiSize / 2 + kuaiBianSize * 2, 4 * kuaiSize / 2 + kuaiBianSize * 2));
+		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingDao4, new BaseImage(ImageType.XiaoSangJiaoXingDao4, 2 * kuaiSize / 2 + kuaiBianSize * 2, 4 * kuaiSize / 2 + kuaiBianSize * 2));
 	}
 
 	public static Texture2D CreateTexture(BaseImage bi)
@@ -343,6 +353,51 @@ public class CommonConfiguration
 				//	return true;
 				//}
 				if (y < -x / 2 + imageHeight && y >= (3 * imageHeight / 4))
+				{
+					return true;
+				}
+				break;
+
+			case ImageType.BigSangJiaoXingDao1:
+			case ImageType.XiaoSangJiaoXingDao1:
+				if (x<imageWidth/2&& y-imageHeight >- x)
+				{
+					return true;
+				}
+				if (x >= imageWidth / 2 && y >x-imageWidth/2 )
+				{
+					return true;
+				}
+				break;
+			case ImageType.BigSangJiaoXingDao2:
+			case ImageType.XiaoSangJiaoXingDao2:
+				if (x<imageWidth/2 && y < x)
+				{
+					return true;
+				}
+				if(x>=imageWidth/2 && y < -x + imageWidth)
+				{
+					return true;
+				}
+				break;
+			case ImageType.BigSangJiaoXingDao3:
+			case ImageType.XiaoSangJiaoXingDao3:
+				if (y < imageHeight / 2 && x - imageWidth > -y)
+				{
+					return true;
+				}
+				if (y >= imageHeight / 2 && x > y - imageHeight / 2)
+				{
+					return true;
+				}
+				break;
+			case ImageType.BigSangJiaoXingDao4:
+			case ImageType.XiaoSangJiaoXingDao4:
+				if (y < imageHeight / 2 && x < y)
+				{
+					return true;
+				}
+				if (y >= imageHeight / 2 && x < -y + imageHeight)
 				{
 					return true;
 				}
