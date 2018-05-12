@@ -166,6 +166,7 @@ public class GameData {
 	}
 	public static void SetPassedLevel(LevelDifficulty level_difficulty ,int level)
 	{
+	    CurrentPassedSimpleLevel[(int)level_difficulty] = level;
 		PlayerPrefs.SetInt(Enum.GetName(typeof(LevelDifficulty), level_difficulty), level);
 	}
 

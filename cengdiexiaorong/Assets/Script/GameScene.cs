@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Umeng;
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.UI;
@@ -138,6 +137,7 @@ public class GameScene : MonoBehaviour
 		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && this.currentSelectImage != null)
 #endif
 		{
+			FSoundManager.PlaySound("drop");
 			this.currentSelectImage.OnDragEnd();
 			this.currentSelectImage = null;
 		}
@@ -173,6 +173,7 @@ public class GameScene : MonoBehaviour
 
 	public void SetGameStart()
 	{
+		FSoundManager.PlayMusic("Background");
 		this.gameStartTime = Time.realtimeSinceStartup;
 		GameControl.Instance.game_data.isGamePlay = true;
 		var level_data = GameControl.Instance.game_data.GetLevelData(GameControl.Instance.game_data.currentGameLevel, GameControl.Instance.game_data.Current_Difficulty);

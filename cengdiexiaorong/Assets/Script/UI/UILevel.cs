@@ -21,11 +21,11 @@ public class UILevel : UIBase {
 	{
 		base.OnEnable();
 		EventTriggerListener.Get(this._back).onClick = this.Back;
-		this.toggle_group.SetAllTogglesOff();
 		toggles[0].onValueChanged.AddListener(this.OnClickSimpleToggle);
 		toggles[1].onValueChanged.AddListener(this.OnClickNormalToggle);
 		toggles[2].onValueChanged.AddListener(this.OnClickHardToggle);
 		toggles[3].onValueChanged.AddListener(this.OnClickAbnormalToggle);
+		this.toggle_group.SetAllTogglesOff();
 		this.toggles[0].isOn = true;
 	}
 
@@ -58,6 +58,10 @@ public class UILevel : UIBase {
 	public override void OnDisable()
 	{
 		base.OnDisable();
+		for (int i = 0; i < toggles.Length; i++)
+		{
+			toggles[i].isOn = false;
+		}
 	}
 
 	private void Back(GameObject obj)

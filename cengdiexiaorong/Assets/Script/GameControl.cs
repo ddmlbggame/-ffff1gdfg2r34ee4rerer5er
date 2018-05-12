@@ -6,8 +6,6 @@ using UnityEngine;
 public  class GameControl {
 	public GameData game_data;
 
-	public AudioControl audio_control;
-
 	private static GameControl _instance;
 
 	public static Action RestartEvent;
@@ -33,6 +31,7 @@ public  class GameControl {
 
 	public void Init(Transform parent)
 	{
+		FSoundManager.Init();
 		game_data = new GameData();
 		var obj = Resources.Load("UI/GamePlayPanel");
 		if (obj != null)
@@ -41,17 +40,6 @@ public  class GameControl {
 		}else
 		{
 			Debug.LogError("can't load UI/GamePlayPanel");
-		}
-
-		var audio = Resources.Load("UI/AudioSource");
-		if (audio != null)
-		{
-			GameObject audio_obj =GameObject.Instantiate(audio, parent) as GameObject;
-			this.audio_control = audio_obj.GetComponent<AudioControl>();
-		}
-		else
-		{
-			Debug.LogError("can't load UI/AudioSource");
 		}
 
 	}
@@ -68,10 +56,26 @@ public  class GameControl {
 
 	public void DoGameOver()
 	{
+		FSoundManager.StopMusic();
 		game_data.isGamePlay = false;
 		UnityEngine.Debug.Log("Finished");
+		if(GameControl.Instance.game_data._current_game_type == GameType.Custom)
+		{
+			int level = GameData.GetPassedLevel(GameControl.Instance.game_data.Current_Difficulty);
+			if(GameControl.Instance.game_data.currentGameLevel == level)
+			{
+				int max_level = GameControl.Instance.game_data.GetLevelDatas(GameControl.Instance.game_data.Current_Difficulty).Count;
+				int passed = level;
+				if (max_level > level)
+				{
+				    passed = level + 1;
+				}
+				GameData.SetPassedLevel(GameControl.Instance.game_data.Current_Difficulty, passed);
+			}
+		}
 		//this.startPanel.ShowPanel(true);
-		this.audio_control.PlayAudio( SoundType.success);
+		FSoundManager.PlaySound("Success");
+		//this.audio_control.PlayAudio( SoundType.success);
 		UIManager.Instance.PushShow(UIFinish.Info);
 	}
 
