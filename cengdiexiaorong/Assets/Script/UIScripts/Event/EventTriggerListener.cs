@@ -38,7 +38,6 @@ public class EventTriggerListener : UnityEngine.EventSystems.EventTrigger
         {
             return;
         }
-		FSoundManager.PlaySound("Combo 01");
         if (onClick != null)
         {
             onClick(gameObject);
