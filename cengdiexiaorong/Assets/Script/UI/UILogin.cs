@@ -27,7 +27,7 @@ public class UILogin : UIBase {
 
 	private void _OnClickRace(GameObject obj)
 	{
-		UIManager.Instance.PushShow(UILevel.Info, true);
+		GameControl.Instance.PlayGame(GameControl.Instance.game_data._current_game_type, LevelDifficulty.Simple ,1);
 	}
 
 	private void _OnClickSetting(GameObject obj)
