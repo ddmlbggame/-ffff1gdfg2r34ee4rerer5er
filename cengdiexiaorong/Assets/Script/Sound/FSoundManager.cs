@@ -326,4 +326,40 @@ public class FSoundManager
 		FSoundManager.UnloadAllSounds();
 		FSoundManager.UnloadMusic();
 	}
+
+	public static bool IsSoundMute
+	{
+		get
+		{
+			if (PlayerPrefs.HasKey("SoundMute"))
+			{
+				return (PlayerPrefs.GetInt("SoundMute") == 1);
+			}
+			return false;
+		}
+		set
+		{
+			int mute = value ? 1 : 0;
+			PlayerPrefs.SetInt("SoundMute", mute);
+			FSoundManager._soundSource.mute = value;
+		}
+	}
+
+	public static bool IsMusicMute
+	{
+		get
+		{
+			if (PlayerPrefs.HasKey("MusicMute"))
+			{
+				return (PlayerPrefs.GetInt("MusicMute") == 1);
+			}
+			return false;
+		}
+		set
+		{
+			int mute = value ? 1 : 0;
+			PlayerPrefs.SetInt("MusicMute", mute);
+			FSoundManager._musicSource.mute = value;
+		}
+	}
 }
