@@ -186,6 +186,18 @@ public class GameData {
 		GameControl.Instance.game_data.Current_Difficulty = LevelDifficulty.Simple;
 	}
 
+	public static int GetRecord(LevelDifficulty level_difficulty ,int level )
+	{
+		string name = Enum.GetName(typeof(LevelDifficulty), level_difficulty) + level;
+		int record = PlayerPrefs.GetInt(name);
+		return record;
+	}
+
+	public static void SetRecord(LevelDifficulty level_difficulty, int level,int time)
+	{
+		string name = Enum.GetName(typeof(LevelDifficulty), level_difficulty) + level;
+		PlayerPrefs.SetInt(name, time);
+	}
 }
 
 public enum GameType

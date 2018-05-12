@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIFinish : UIBase {
 
@@ -11,12 +12,20 @@ public class UIFinish : UIBase {
 	private GameObject _restart;
 	[SerializeField]
 	private GameObject _next;
+	[SerializeField]
+	private Text hight_record;
+	[SerializeField]
+	private Text beyond_record;
+	[SerializeField]
+	private Text current_record;
+
 	public override void OnEnable()
 	{
 		base.OnEnable();
 		EventTriggerListener.Get(this._back).onClick = this._OnClickBack;
 		EventTriggerListener.Get(this._restart).onClick = this.OnClickRestart;
 		EventTriggerListener.Get(this._next).onClick = this.OnClickNext;
+		_Refresh();
 	}
 
 	private void _Refresh()
@@ -33,12 +42,29 @@ public class UIFinish : UIBase {
 				this._next.SetActive(false);
 				this._restart.SetActive(true);
 			}
-		}else
+			int record_time = GameData.GetRecord(GameControl.Instance.game_data.Current_Difficulty, GameControl.Instance.game_data.currentGameLevel);
+			if (record_time == 0)
+			{
+				this.hight_record.text = "无纪录";
+				GameData.SetRecord(GameControl.Instance.game_data.Current_Difficulty, GameControl.Instance.game_data.currentGameLevel, UIMain.custom_cost_time);
+			}
+			else
+			{
+				this.hight_record.text = GameControl.SetTimeFormat(record_time);
+			}
+			if(UIMain.custom_cost_time< record_time)
+			{
+				GameData.SetRecord(GameControl.Instance.game_data.Current_Difficulty, GameControl.Instance.game_data.currentGameLevel, UIMain.custom_cost_time);
+			}
+		}
+		else
 		{
 			this._next.SetActive(false);
 			this._restart.SetActive(true);
 		}
-		
+		this.current_record.text = GameControl.SetTimeFormat(UIMain.custom_cost_time);
+		this.beyond_record.text = GameControl.BeatPeple(UIMain.custom_cost_time, GameControl.Instance.game_data._current_game_type);
+
 	}
 	private void _OnClickBack(GameObject obj)
 	{

@@ -14,7 +14,7 @@ public class UILevelItem : MonoBehaviour {
 
 	public void OnEnable()
 	{
-		EventTriggerListener.Get(this.gameObject).onClick = this._OnClick;
+		EventTriggerClick.Get(this.gameObject).onClick = this._OnClick;
 	}
 
 	private void _OnClick(GameObject obj)

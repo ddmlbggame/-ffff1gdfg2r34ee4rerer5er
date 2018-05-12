@@ -87,7 +87,7 @@ public  class GameControl {
 				}
 				GameData.SetPassedLevel(GameControl.Instance.game_data.Current_Difficulty, passed);
 			}
-			FSoundManager.PlaySound("Success");
+			FSoundManager.PlaySound("Cheers");
 			UIManager.Instance.PushShow(UIFinish.Info);
 		}
 		else
@@ -105,6 +105,21 @@ public  class GameControl {
 	public void ChallangeGameFinshed()
 	{
 		FSoundManager.StopMusic();
+		FSoundManager.PlaySound("Success");
 		UIManager.Instance.PushShow(UIFinish.Info);
+	}
+
+	public static string SetTimeFormat(int time)
+	{
+		int second = time % 60;
+		int min = (time % 3600 - second) / 60;
+		return string.Format("{0}:{1}", min.ToString("00"), second.ToString("00"));
+	}
+
+	//public results_time1 = 30;
+	public static string BeatPeple(int time ,GameType type)
+	{
+		float random = UnityEngine.Random.Range(70, 98);
+		return string.Format("超越了全球{0}%的玩家", random);
 	}
 }

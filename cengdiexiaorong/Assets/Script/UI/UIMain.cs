@@ -30,6 +30,7 @@ public class UIMain : UIBase {
 	[SerializeField]
 	private Text _custom_time;
 
+	public static int custom_cost_time =0;
 
 	public override void OnEnable()
 	{
@@ -103,21 +104,15 @@ public class UIMain : UIBase {
 	private IEnumerator _custom_count_time = null;
 	private IEnumerator _CustomCountTime()
 	{
-		int time = 0;
+		custom_cost_time = 0;
 		while (true)
 		{
-			this._custom_time.text = SetTimeFormat(time);
+			this._custom_time.text = GameControl.SetTimeFormat(custom_cost_time);
 			yield return new WaitForSeconds(1);
-			time++;
+			custom_cost_time++;
 		}
 	}
 
-	public static string SetTimeFormat(int time)
-	{
-		int second = time % 60;
-		int min = (time % 3600 - second)/60;
-		return string.Format("{0}:{1}", min.ToString("00"), second.ToString("00"));
-	}
 
 	private void OnClickBack(GameObject obj)
 	{
