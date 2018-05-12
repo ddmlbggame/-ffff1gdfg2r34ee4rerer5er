@@ -41,9 +41,9 @@ public  class UIManager {
 		this._canvas = GameObject.Instantiate(canvas) as GameObject;
 		this.canvas = this._canvas.GetComponent<Canvas>();
 		this._canvas.transform.SetParent(parent);
-		this.Dialog = this._canvas.transform.FindChild("Dialog").transform;
-		this.Normal = this._canvas.transform.FindChild("Normal").transform;
-		this.Game = this._canvas.transform.FindChild("Game").transform;
+		this.Dialog = this._canvas.transform.Find("Dialog").transform;
+		this.Normal = this._canvas.transform.Find("Normal").transform;
+		this.Game = this._canvas.transform.Find("Game").transform;
 	}
 
 	public void PushShow(UIInfo info , bool is_push = false)
