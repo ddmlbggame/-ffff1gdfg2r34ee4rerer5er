@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.Advertisements;
 using System;
+using admob;
 
 public class SDK : MonoBehaviour {
 
@@ -23,6 +24,8 @@ public class SDK : MonoBehaviour {
 		GA.SetLogEnabled(true);
 		#endregion
 		InitGameCenter();
+		// 初始化谷歌广告
+		initAdmob();
 		// 初始化unity广告
 		if (Advertisement.isSupported)
 		{
@@ -195,4 +198,65 @@ public class SDK : MonoBehaviour {
 	}
 
 	#endregion
+
+	#region google 广告
+	public string bannerID;
+	public string fullID;
+	Admob ad;
+	void initAdmob()
+	{
+
+		ad = Admob.Instance();
+		ad.bannerEventHandler += onBannerEvent;
+		ad.interstitialEventHandler += onInterstitialEvent;
+		ad.rewardedVideoEventHandler += onRewardedVideoEvent;
+		ad.nativeBannerEventHandler += onNativeBannerEvent;
+		ad.initAdmob("ca-app-pub-3940256099942544/2934735716", "ca-app-pub-3940256099942544/4411468910");//all id are admob test id,change those to your
+		ad.setTesting(true);//show test ad
+		//#if UNITY_EDITOR
+		//		ad.initAdmob("ca-app-pub-3940256099942544/2934735716", "ca-app-pub-3940256099942544/4411468910");//all id are admob test id,change those to your
+		//#else
+		//		ad.initAdmob(bannerID, fullID);//all id are admob test id,change those to your
+		//#endif
+
+		ad.setGender(AdmobGender.MALE);
+		string[] keywords = { "game", "crash", "male game" };
+		//  ad.setKeywords(keywords);//set keywords for ad
+		Debug.Log("admob inited -------------");
+
+	}
+
+	public void ShowInterstitial()
+	{
+		if (ad.isInterstitialReady())
+		{
+			ad.showInterstitial();
+		}
+		else
+		{
+			ad.loadInterstitial();
+		}
+	}
+
+	void onInterstitialEvent(string eventName, string msg)
+	{
+		Debug.Log("handler onAdmobEvent---" + eventName + "   " + msg);
+		if (eventName == AdmobEvent.onAdLoaded)
+		{
+			Admob.Instance().showInterstitial();
+		}
+	}
+	void onBannerEvent(string eventName, string msg)
+	{
+		Debug.Log("handler onAdmobBannerEvent---" + eventName + "   " + msg);
+	}
+	void onRewardedVideoEvent(string eventName, string msg)
+	{
+		Debug.Log("handler onRewardedVideoEvent---" + eventName + "  rewarded: " + msg);
+	}
+	void onNativeBannerEvent(string eventName, string msg)
+	{
+		Debug.Log("handler onAdmobNativeBannerEvent---" + eventName + "   " + msg);
+	}
+#endregion
 }

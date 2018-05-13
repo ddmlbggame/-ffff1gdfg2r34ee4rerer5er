@@ -70,6 +70,7 @@ public class UIFinish : UIBase {
 	{
 		UIManager.Instance.Hide(Info);
 		UIManager.Instance.PopShow();
+		SDK.Instance.ShowInterstitial();
 	}
 
 	private void OnClickRestart(GameObject obj)

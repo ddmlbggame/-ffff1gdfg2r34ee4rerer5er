@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using admob;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +42,7 @@ public class UIMain : UIBase {
 		GameControl.FinishChallangeOneEvent += this.RefreshChange;
 		SDK.RewardUnityAds += _ShowTip;
 		Show();
+		Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
 	}
 	public override void OnDisable()
 	{
@@ -48,6 +50,7 @@ public class UIMain : UIBase {
 		SDK.RewardUnityAds -= _ShowTip;
 		GameControl.RestartEvent -= this.Show;
 		GameControl.FinishChallangeOneEvent -= this.RefreshChange;
+		Admob.Instance().removeBanner();
 		if (this._count_time != null)
 		{
 			StopCoroutine(this._count_time);
