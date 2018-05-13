@@ -39,11 +39,13 @@ public class UIMain : UIBase {
 		EventTriggerListener.Get(this._tip).onClick = this.OnClickTip;
 		GameControl.RestartEvent += this.Show;
 		GameControl.FinishChallangeOneEvent += this.RefreshChange;
+		SDK.RewardUnityAds += _ShowTip;
 		Show();
 	}
 	public override void OnDisable()
 	{
 		base.OnDisable();
+		SDK.RewardUnityAds -= _ShowTip;
 		GameControl.RestartEvent -= this.Show;
 		GameControl.FinishChallangeOneEvent -= this.RefreshChange;
 		if (this._count_time != null)
@@ -184,8 +186,21 @@ public class UIMain : UIBase {
 		UIManager.Instance.PopShow();
 	}
 
+	private void _ShowTip()
+	{
+		GameControl.Instance.game_data.canshowtip = true;
+		GameScene.Instance.ShowTip();
+	}
+
 	private void OnClickTip(GameObject obj)
 	{
-		GameScene.Instance.ShowTip();
+		if (GameControl.Instance.game_data.canshowtip)
+		{
+			GameScene.Instance.ShowTip();
+		}
+		else
+		{
+			SDK.Instance.ShowRewardedVideo();
+		}
 	}
 }

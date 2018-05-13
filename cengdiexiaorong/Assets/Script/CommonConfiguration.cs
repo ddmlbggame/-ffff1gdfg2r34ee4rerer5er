@@ -83,6 +83,11 @@ public class CommonConfiguration
 		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingDao2, new BaseImage(ImageType.XiaoSangJiaoXingDao2, 4 * kuaiSize / 2 + kuaiBianSize * 2, 2 * kuaiSize / 2 + kuaiBianSize * 2));
 		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingDao3, new BaseImage(ImageType.XiaoSangJiaoXingDao3, 2 * kuaiSize / 2 + kuaiBianSize * 2, 4 * kuaiSize / 2 + kuaiBianSize * 2));
 		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingDao4, new BaseImage(ImageType.XiaoSangJiaoXingDao4, 2 * kuaiSize / 2 + kuaiBianSize * 2, 4 * kuaiSize / 2 + kuaiBianSize * 2));
+
+		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingSS1, new BaseImage(ImageType.XiaoSangJiaoXingSS1, 3*kuaiSize/2 + kuaiBianSize * 2, 3 * kuaiSize / 2 + kuaiBianSize * 2));
+		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingSS2, new BaseImage(ImageType.XiaoSangJiaoXingSS2, 3 * kuaiSize / 2 + kuaiBianSize * 2, 3 * kuaiSize / 2 + kuaiBianSize * 2));
+		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingSS3, new BaseImage(ImageType.XiaoSangJiaoXingSS3, 3 * kuaiSize / 2 + kuaiBianSize * 2, 3 * kuaiSize / 2 + kuaiBianSize * 2));
+		CommonConfiguration.baseImages.Add((int)ImageType.XiaoSangJiaoXingSS4, new BaseImage(ImageType.XiaoSangJiaoXingSS4, 3 * kuaiSize / 2 + kuaiBianSize * 2, 3 * kuaiSize / 2 + kuaiBianSize * 2));
 	}
 
 	public static Texture2D CreateTexture(BaseImage bi)
@@ -133,6 +138,7 @@ public class CommonConfiguration
 				return true;
 			case ImageType.SanJiaoXing1:
 			case ImageType.BigSangJiaoXing1:
+			case ImageType.XiaoSangJiaoXingSS1:
 				if (y >= x)
 				{
 					return true;
@@ -140,6 +146,7 @@ public class CommonConfiguration
 				break;
 			case ImageType.SanJiaoXing2:
 			case ImageType.BigSangJiaoXing2:
+			case ImageType.XiaoSangJiaoXingSS2:
 				if (y < x)
 				{
 					return true;
@@ -147,6 +154,7 @@ public class CommonConfiguration
 				break;
 			case ImageType.SanJiaoXing3:
 			case ImageType.BigSangJiaoXing3:
+			case ImageType.XiaoSangJiaoXingSS3:
 				if (y <= -x + imageWidth)
 				{
 					return true;
@@ -154,6 +162,7 @@ public class CommonConfiguration
 				break;
 			case ImageType.SanJiaoXing4:
 			case ImageType.BigSangJiaoXing4:
+			case ImageType.XiaoSangJiaoXingSS4:
 				if (y > -x + imageWidth)
 				{
 					return true;

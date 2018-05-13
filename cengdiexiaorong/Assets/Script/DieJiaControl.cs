@@ -230,11 +230,12 @@ public class DieJiaControl : MonoBehaviour
 				localPosition = current.transform.localPosition;
 			}
 		}
-		if(ic.imageIndex == (int)ImageType.ParallelogramLong3 || ic.imageIndex == (int)ImageType.ParallelogramLong4
+		if (ic.imageIndex == (int)ImageType.ParallelogramLong3 || ic.imageIndex == (int)ImageType.ParallelogramLong4
 			|| ic.imageIndex == (int)ImageType.BigChangFangXing1
 			|| ic.imageIndex == (int)ImageType.BigChangFangXing3
 			|| ic.imageIndex == (int)ImageType.BigSangJiaoXingDao1
-			|| ic.imageIndex == (int)ImageType.BigSangJiaoXingDao2)
+			|| ic.imageIndex == (int)ImageType.BigSangJiaoXingDao2
+			)
 		{
 			if(ic.transform.localPosition.y > localPosition.y)
 			{
@@ -258,6 +259,44 @@ public class DieJiaControl : MonoBehaviour
 			else
 			{
 				ic.transform.localPosition = new Vector3(localPosition.x - CommonConfiguration.kuaiSize / 4, localPosition.y, 0);
+			}
+		}
+		else if(ic.imageIndex == (int)ImageType.XiaoSangJiaoXingSS3
+			|| ic.imageIndex == (int)ImageType.XiaoSangJiaoXingSS4
+			|| ic.imageIndex == (int)ImageType.XiaoSangJiaoXingSS1
+			|| ic.imageIndex == (int)ImageType.XiaoSangJiaoXingSS2)
+		{
+			float ic_local_x = ic.transform.localPosition.x;
+			if (ic.transform.localPosition.y > localPosition.y)
+			{
+				ic.transform.localPosition = new Vector3(localPosition.x, localPosition.y + CommonConfiguration.kuaiSize / 4, 0);
+			}
+			else
+			{
+				ic.transform.localPosition = new Vector3(localPosition.x, localPosition.y - CommonConfiguration.kuaiSize / 4, 0);
+			}
+			if (ic_local_x > localPosition.x)
+			{
+				if (ic_local_x > localPosition.x + CommonConfiguration.kuaiSize / 4)
+				{
+					ic.transform.localPosition = new Vector3(localPosition.x - CommonConfiguration.kuaiSize / 4, ic.transform.localPosition.y, 0);
+				}
+				else
+				{
+					ic.transform.localPosition = new Vector3(localPosition.x + CommonConfiguration.kuaiSize / 4, ic.transform.localPosition.y, 0);
+				}
+
+			}
+			else
+			{
+				if (ic_local_x > localPosition.x - CommonConfiguration.kuaiSize / 4)
+				{
+					ic.transform.localPosition = new Vector3(localPosition.x - CommonConfiguration.kuaiSize / 4, ic.transform.localPosition.y, 0);
+				}
+				else
+				{
+					ic.transform.localPosition = new Vector3(localPosition.x + CommonConfiguration.kuaiSize / 4, ic.transform.localPosition.y, 0);
+				}
 			}
 		}
 		else

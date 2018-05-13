@@ -30,6 +30,8 @@ public class GameData {
 
 	public int ChallangeRestTime = 0;
 
+	public bool canshowtip = false;
+
 	public void ResetChallangeData()
 	{
 		ChallangeRestTime = ChallangeTime;
@@ -188,7 +190,7 @@ public class GameData {
 
 	public void SetRandomLevel()
 	{
-		GameControl.Instance.game_data.currentGameLevel = UnityEngine.Random.Range(1, 10);
+		GameControl.Instance.game_data.currentGameLevel = UnityEngine.Random.Range(1, 7);
 		GameControl.Instance.game_data.Current_Difficulty = LevelDifficulty.Simple;
 	}
 

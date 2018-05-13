@@ -49,4 +49,9 @@ public enum ImageType : byte
 	XiaoSangJiaoXingDao2,
 	XiaoSangJiaoXingDao3,
 	XiaoSangJiaoXingDao4,
+
+	XiaoSangJiaoXingSS1,
+	XiaoSangJiaoXingSS2,
+	XiaoSangJiaoXingSS3,
+	XiaoSangJiaoXingSS4,
 }

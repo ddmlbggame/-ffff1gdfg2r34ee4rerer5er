@@ -78,6 +78,7 @@ public class UIFinish : UIBase {
 		GameScene.Instance.SetGameStart();
 		GameControl.Instance.game_data.ResetChallangeData();
 		GameControl.HandleRestartEvent();
+		SDK.Instance.StartLevel(string.Format("重新开始，模式{0}",GameControl.Instance.game_data._current_game_type));
 	}
 
 	private void OnClickNext(GameObject obj)

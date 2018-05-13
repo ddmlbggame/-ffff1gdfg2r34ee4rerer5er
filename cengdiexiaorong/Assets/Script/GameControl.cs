@@ -73,7 +73,8 @@ public  class GameControl {
 	{
 		game_data.isGamePlay = false;
 		UnityEngine.Debug.Log("Finished");
-		if(GameControl.Instance.game_data._current_game_type == GameType.Custom)
+		SDK.Instance.FinishLevel(string.Format("完成关卡{0}难度{1}模式{2}",GameControl.Instance.game_data.Current_Difficulty, GameControl.Instance.game_data.currentGameLevel, GameControl.Instance.game_data._current_game_type));
+		if (GameControl.Instance.game_data._current_game_type == GameType.Custom)
 		{
 			FSoundManager.StopMusic();
 			int level = GameData.GetPassedLevel(GameControl.Instance.game_data.Current_Difficulty);
@@ -104,6 +105,11 @@ public  class GameControl {
 
 	public void ChallangeGameFinshed()
 	{
+		if (game_data.ChallangePassedNumber > 0)
+		{
+			SDK.Instance.ReportScore(game_data.ChallangePassedNumber);
+		}
+		SDK.Instance.FinishLevel("挑战模式结束");
 		FSoundManager.StopMusic();
 		FSoundManager.PlaySound("Success");
 		UIManager.Instance.PushShow(UIFinish.Info);

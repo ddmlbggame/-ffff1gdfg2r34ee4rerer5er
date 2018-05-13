@@ -17,6 +17,7 @@ public class UILevel : UIBase {
 
 	private List<UILevelItem> level_items = new List<UILevelItem>();
 
+	public static int toggle_index = 0;
 	public override void OnEnable()
 	{
 		base.OnEnable();
@@ -26,7 +27,7 @@ public class UILevel : UIBase {
 		toggles[2].onValueChanged.AddListener(this.OnClickHardToggle);
 		toggles[3].onValueChanged.AddListener(this.OnClickAbnormalToggle);
 		this.toggle_group.SetAllTogglesOff();
-		this.toggles[0].isOn = true;
+		this.toggles[toggle_index].isOn = true;
 	}
 
 	public void Refresh(LevelDifficulty level_difficulty)
@@ -73,6 +74,7 @@ public class UILevel : UIBase {
 	{
 		if (state)
 		{
+			toggle_index = 0;
 			this.Refresh(LevelDifficulty.Simple);
 		}
 	}
@@ -81,6 +83,7 @@ public class UILevel : UIBase {
 	{
 		if (state)
 		{
+			toggle_index = 1;
 			this.Refresh(LevelDifficulty.Normal);
 		}
 	}
@@ -89,6 +92,7 @@ public class UILevel : UIBase {
 	{
 		if (state)
 		{
+			toggle_index = 2;
 			this.Refresh(LevelDifficulty.Hard);
 		}
 	}
@@ -97,6 +101,7 @@ public class UILevel : UIBase {
 	{
 		if (state)
 		{
+			toggle_index = 3;
 			this.Refresh(LevelDifficulty.Abnormal);
 		}
 	}

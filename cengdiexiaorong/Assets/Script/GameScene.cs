@@ -174,10 +174,20 @@ public class GameScene : MonoBehaviour
 
 	public void SetGameStart(bool playsound = true)
 	{
+		GameControl.Instance.game_data.canshowtip = false;
 		if (playsound)
 		{
 			FSoundManager.PlayMusic("Background");
 		}
+		this.gameStartTime = Time.realtimeSinceStartup;
+		GameControl.Instance.game_data.isGamePlay = true;
+		var level_data = GameControl.Instance.game_data.GetLevelData(GameControl.Instance.game_data.currentGameLevel, GameControl.Instance.game_data.Current_Difficulty);
+		this.CreateOperationalImage(level_data);
+		this.CreateImageOnShiLiPan(level_data);
+	}
+
+	public void ShowTipsEnd()
+	{
 		this.gameStartTime = Time.realtimeSinceStartup;
 		GameControl.Instance.game_data.isGamePlay = true;
 		var level_data = GameControl.Instance.game_data.GetLevelData(GameControl.Instance.game_data.currentGameLevel, GameControl.Instance.game_data.Current_Difficulty);
@@ -357,7 +367,7 @@ public class GameScene : MonoBehaviour
 		}
 		//UnityEngine.Debug.Log("----移动完成");
 		GameControl.Instance.game_data.doing_show_tip = false;
-		GameScene.Instance.SetGameStart(false);
+		GameScene.Instance.ShowTipsEnd();
 	}
 
 	//private string sceneid = "";

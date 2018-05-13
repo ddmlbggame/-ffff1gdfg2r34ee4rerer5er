@@ -22,6 +22,7 @@ public class UILevelItem : MonoBehaviour {
 		if(this.level_data!=null && GameData.GetPassedLevel(level_data.Level_Difficulty)>= level_data.CurrentLevel)
 		{
 			GameControl.Instance.PlayGame( GameType.Custom, this.level_data.Level_Difficulty, this.level_data.CurrentLevel);
+			SDK.Instance.StartLevel(string.Format("进入关卡{0}难度{1}类型{2}",this.level_data.CurrentLevel, this.level_data.Level_Difficulty,GameType.Custom));
 		}
 	}
 

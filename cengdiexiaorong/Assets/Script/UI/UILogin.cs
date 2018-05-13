@@ -28,6 +28,7 @@ public class UILogin : UIBase {
 	private void _OnClickRace(GameObject obj)
 	{
 		GameControl.Instance.PlayGame( GameType.challenge, LevelDifficulty.Simple ,1);
+		SDK.Instance.StartLevel("进入挑战模式");
 	}
 
 	private void _OnClickSetting(GameObject obj)
