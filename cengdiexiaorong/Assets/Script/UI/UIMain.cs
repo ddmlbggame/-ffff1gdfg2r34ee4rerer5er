@@ -185,6 +185,7 @@ public class UIMain : UIBase {
 
 	private void OnClickBack(GameObject obj)
 	{
+		GameControl.Instance.game_data.isGamePlay = false;
 		FSoundManager.StopMusic();
 		UIManager.Instance.PopShow();
 	}

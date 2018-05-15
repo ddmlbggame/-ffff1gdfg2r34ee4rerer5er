@@ -333,13 +333,13 @@ public class GameScene : MonoBehaviour
 		GameControl.Instance.game_data.doing_show_tip = true;
 		var level_data = GameControl.Instance.game_data.GetLevelData(GameControl.Instance.game_data.currentGameLevel, GameControl.Instance.game_data.Current_Difficulty);
 		this.CreateOperationalImage(level_data);
+
 		if (MoveIEnumerator != null)
 		{
 			StopCoroutine(MoveIEnumerator);
 		}
-		MoveIEnumerator = Move();
+		MoveIEnumerator = MoveTip();
 		StartCoroutine(MoveIEnumerator);
-
 	}
 	IEnumerator MoveIEnumerator = null;
 
@@ -369,6 +369,68 @@ public class GameScene : MonoBehaviour
 		GameControl.Instance.game_data.doing_show_tip = false;
 		GameScene.Instance.ShowTipsEnd();
 	}
+
+	private float speed =8;
+	private bool is_moving;
+	private ImageControl _current_move_image;
+	private Vector3 _current_move_start_pos;
+	private Vector3 destination_pos;
+	private Action move_done;
+
+	private IEnumerator MoveTip()
+	{
+		foreach (ImageControl current in this.Operational_Figure_Control.imageList)
+		{
+			//UnityEngine.Debug.Log("-----start" + current.name);
+			yield return MoveTo(current, current.image_data.ImagePosition);
+		}
+		//UnityEngine.Debug.Log("-----end");
+		GameControl.Instance.game_data.doing_show_tip = false;
+		GameScene.Instance.ShowTipsEnd();
+	}
+	private IEnumerator MoveTo(ImageControl image_control ,Vector3 des)
+	{
+		is_moving = true;
+		destination_pos = des;
+		_current_move_start_pos = image_control.transform.localPosition;
+		_current_move_image = image_control;
+		Vector3 move_dir = (destination_pos - _current_move_start_pos).normalized;
+		while (true)
+		{
+			yield return null;
+			yield return MoveUpdate(move_dir);
+			if (!is_moving)
+			{
+				yield break;
+			}
+		}
+	}
+
+	private IEnumerator MoveUpdate(Vector3 dir)
+	{
+		if (!GameControl.Instance.game_data.isGamePlay)
+		{
+			GameControl.Instance.game_data.doing_show_tip = false;
+			yield break;
+		}
+		if (!GameControl.Instance.game_data.doing_show_tip)
+		{
+			yield break;
+		}
+		//yield return new WaitForSeconds(0.01f);
+		//UnityEngine.Debug.Log(Vector3.Distance(_current_move_image.transform.localPosition, destination_pos));
+		if (Vector3.Distance(_current_move_image.transform.localPosition, destination_pos) <= 2f)
+		{
+			is_moving = false;
+			_current_move_image.DragToPos(destination_pos);
+			yield break;
+		}
+		//_current_move_image.transform.localPosition += dir * speed;
+		_current_move_image.transform.localPosition = Vector3.Slerp(_current_move_image.transform.localPosition, destination_pos, Time.deltaTime * speed);
+		_current_move_image.DragToPos(_current_move_image.transform.localPosition);
+		yield return null;
+	}
+
 
 	//private string sceneid = "";
 	//public void OnGUI()

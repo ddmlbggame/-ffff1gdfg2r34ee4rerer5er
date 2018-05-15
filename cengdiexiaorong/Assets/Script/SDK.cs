@@ -13,7 +13,7 @@ public class SDK : MonoBehaviour {
 
 	public string unity_ads_game_id = "1798175";
 
-	public string gamecenter_board_id = "需要填写挑战模式排行榜";
+	public string gamecenter_board_id = "challenge";
 
 
 	private void Awake()

@@ -14,6 +14,9 @@ public class EditPanel : MonoBehaviour
 	public int Level;
 
 	public Dictionary<ImageControl, ImageControl> images;
+
+	public static bool nofinish;
+
 	public void OnSave()
 	{
 		string text;
@@ -67,7 +70,7 @@ public class EditPanel : MonoBehaviour
 	private Dictionary<ImageControl, imagedata> image_datas = new Dictionary<ImageControl, imagedata>();
 	public void OnSaveData()
 	{
-		
+		GameControl.Instance.game_data.isGamePlay = true;
 		image_datas.Clear();
 		ImageControl first_image = null;
 		for (int i = 0; i < GameScene.Instance.Operational_Figure_Control.imageList.Count; i++)
