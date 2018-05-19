@@ -188,6 +188,17 @@ public class GameData {
 		PlayerPrefs.SetInt(Enum.GetName(typeof(LevelDifficulty), level_difficulty), level);
 	}
 
+	public static void SetChallangeLevel(int level)
+	{
+		PlayerPrefs.SetInt("chanllange", level);
+	}
+	public static int GetChanllangeLevel()
+	{
+		int passed_level = PlayerPrefs.GetInt("chanllange");
+		
+		return passed_level;
+	}
+
 	public void SetRandomLevel()
 	{
 		GameControl.Instance.game_data.currentGameLevel = UnityEngine.Random.Range(1, 7);

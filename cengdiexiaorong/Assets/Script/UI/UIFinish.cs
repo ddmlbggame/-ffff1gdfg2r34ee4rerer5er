@@ -19,6 +19,7 @@ public class UIFinish : UIBase {
 	[SerializeField]
 	private Text current_record;
 
+	public static int chanllange_level = 0;
 	public override void OnEnable()
 	{
 		base.OnEnable();
@@ -56,14 +57,25 @@ public class UIFinish : UIBase {
 			{
 				GameData.SetRecord(GameControl.Instance.game_data.Current_Difficulty, GameControl.Instance.game_data.currentGameLevel, UIMain.custom_cost_time);
 			}
+			this.current_record.text = GameControl.SetTimeFormat(UIMain.custom_cost_time);
+			this.beyond_record.text = GameControl.BeatPeple(UIMain.custom_cost_time, GameControl.Instance.game_data._current_game_type);
 		}
 		else
 		{
 			this._next.SetActive(false);
 			this._restart.SetActive(true);
+			this.current_record.text = GameControl.Instance.game_data.ChallangePassedNumber.ToString();
+			if (chanllange_level == 0)
+			{
+				this.hight_record.text = "无纪录";
+			}
+			else
+			{
+				this.hight_record.text = chanllange_level.ToString();
+			}
+			this.beyond_record.text = GameControl.BeatPeple(UIMain.custom_cost_time, GameControl.Instance.game_data._current_game_type);
 		}
-		this.current_record.text = GameControl.SetTimeFormat(UIMain.custom_cost_time);
-		this.beyond_record.text = GameControl.BeatPeple(UIMain.custom_cost_time, GameControl.Instance.game_data._current_game_type);
+		
 
 	}
 	private void _OnClickBack(GameObject obj)
@@ -86,7 +98,7 @@ public class UIFinish : UIBase {
 	{
 		UIManager.Instance.Hide(Info);
 		GameControl.Instance.game_data.currentGameLevel++;
-		GameScene.Instance.SetGameStart(false);
+		GameScene.Instance.SetGameStart(true);
 		GameControl.HandleRestartEvent();
 
 	}

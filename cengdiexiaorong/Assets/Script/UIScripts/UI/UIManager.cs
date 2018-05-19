@@ -27,6 +27,8 @@ public  class UIManager {
 
 	public Transform Normal;
 
+	public Transform Top;
+
 	public Transform Game;
 
 	private Stack<UIBase> ui_queue = new Stack<UIBase>();
@@ -43,6 +45,7 @@ public  class UIManager {
 		this._canvas.transform.SetParent(parent);
 		this.Dialog = this._canvas.transform.Find("Dialog").transform;
 		this.Normal = this._canvas.transform.Find("Normal").transform;
+		this.Top = this._canvas.transform.Find("Top").transform;
 		this.Game = this._canvas.transform.Find("Game").transform;
 	}
 
@@ -57,6 +60,9 @@ public  class UIManager {
 				break;
 			case UIHierarchyType.Dialog:
 				parent = this.Dialog.transform;
+				break;
+			case UIHierarchyType.Top:
+				parent = this.Top.transform;
 				break;
 		}
 		if (this.ui_dictionary.ContainsKey(info))

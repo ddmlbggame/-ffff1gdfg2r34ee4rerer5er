@@ -40,6 +40,8 @@ public class UIMain : UIBase {
 		EventTriggerListener.Get(this._tip).onClick = this.OnClickTip;
 		GameControl.RestartEvent += this.Show;
 		GameControl.FinishChallangeOneEvent += this.RefreshChange;
+		GameControl.FinishChallangeStop += this.StopCount;
+		
 		SDK.RewardUnityAds += _ShowTip;
 		Show();
 		Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
@@ -49,6 +51,7 @@ public class UIMain : UIBase {
 		base.OnDisable();
 		SDK.RewardUnityAds -= _ShowTip;
 		GameControl.RestartEvent -= this.Show;
+		GameControl.FinishChallangeStop -= this.StopCount;
 		GameControl.FinishChallangeOneEvent -= this.RefreshChange;
 		Admob.Instance().removeBanner();
 		if (this._count_time != null)
@@ -89,9 +92,18 @@ public class UIMain : UIBase {
 	
 	}
 
+	private void StopCount()
+	{
+		if (this._count_time != null)
+		{
+			StopCoroutine(this._count_time);
+		}
+	}
+
 	private void RefreshChange()
 	{
 		this._level.text = string.Format("完成 {0}关", GameControl.Instance.game_data.ChallangePassedNumber);
+		Show();
 	}
 	private IEnumerator _count_time = null;
 	YieldInstruction wait = new WaitForSeconds(0.125f);

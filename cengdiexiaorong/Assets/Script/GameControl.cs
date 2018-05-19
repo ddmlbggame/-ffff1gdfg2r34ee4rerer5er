@@ -27,6 +27,16 @@ public  class GameControl {
 			FinishChallangeOneEvent();
 		}
 	}
+	public static Action FinishChallangeStop;
+
+	public static void HandleFinishChallangeStop()
+	{
+		if (FinishChallangeStop != null)
+		{
+			FinishChallangeStop();
+		}
+	}
+
 
 	public static GameControl Instance
 	{
@@ -89,15 +99,18 @@ public  class GameControl {
 				GameData.SetPassedLevel(GameControl.Instance.game_data.Current_Difficulty, passed);
 			}
 			FSoundManager.PlaySound("Cheers");
-			UIManager.Instance.PushShow(UIFinish.Info);
+			UIResult.result = true;
+			UIManager.Instance.PushShow(UIResult.Info, false);
 		}
 		else
 		{
+			FSoundManager.PlaySound("Success");
 			GameControl.Instance.game_data.ChallangePassedNumber++;
 			GameControl.Instance.game_data.ChallangeRestTime = GameControl.Instance.game_data.ChallangeTime;
-			HandleFinishChallangeOneEvent();
-			game_data.SetRandomLevel();
-			GameScene.Instance.SetGameStart(false);
+			HandleFinishChallangeStop();
+			GameControl.Instance.game_data.isGamePlay = false;
+			UIResult.result = true;
+			UIManager.Instance.PushShow(UIResult.Info, false);
 
 		}
 		
@@ -105,14 +118,23 @@ public  class GameControl {
 
 	public void ChallangeGameFinshed()
 	{
-		if (game_data.ChallangePassedNumber > 0)
+		int max_level = GameData.GetChanllangeLevel();
+		UIFinish.chanllange_level = max_level;
+		if (GameControl.Instance.game_data.ChallangePassedNumber > max_level)
 		{
-			SDK.Instance.ReportScore(game_data.ChallangePassedNumber);
+			GameData.SetChallangeLevel(GameControl.Instance.game_data.ChallangePassedNumber);
+		}
+		if (GameControl.Instance.game_data.ChallangePassedNumber > 0)
+		{
+			SDK.Instance.ReportScore(GameControl.Instance.game_data.ChallangePassedNumber);
 		}
 		SDK.Instance.FinishLevel("挑战模式结束");
 		FSoundManager.StopMusic();
 		FSoundManager.PlaySound("Success");
-		UIManager.Instance.PushShow(UIFinish.Info);
+		GameControl.Instance.game_data.isGamePlay = false;
+		UIResult.result = false;
+		UIManager.Instance.PushShow(UIResult.Info, false);
+
 	}
 
 	public static string SetTimeFormat(int time)

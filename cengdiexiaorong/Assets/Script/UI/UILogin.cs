@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UILogin : UIBase {
 
@@ -18,6 +19,11 @@ public class UILogin : UIBase {
 		EventTriggerListener.Get(this._custom_game).onClick = this._OnClickCustom;
 		EventTriggerListener.Get(this._race_game).onClick = this._OnClickRace;
 		EventTriggerListener.Get(this._setting).onClick = this._OnClickSetting;
+	}
+
+	private void Refresh()
+	{
+		int level = GameData.GetChanllangeLevel();
 	}
 
 	private void _OnClickCustom(GameObject obj)

@@ -26,10 +26,12 @@ public enum UIType
 	Pause,
 	Finish,
 	Level,
+	Result,
 }
 
 public enum UIHierarchyType
 {
 	Normal,
 	Dialog,
+	Top,
 }
