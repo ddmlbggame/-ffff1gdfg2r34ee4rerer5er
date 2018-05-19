@@ -104,6 +104,11 @@ public  class GameControl {
 		}
 		else
 		{
+			int max_level = GameData.GetChanllangeLevel();
+			if (GameControl.Instance.game_data.ChallangePassedNumber > max_level)
+			{
+				GameData.SetChallangeLevel(GameControl.Instance.game_data.ChallangePassedNumber);
+			}
 			FSoundManager.PlaySound("Success");
 			GameControl.Instance.game_data.ChallangePassedNumber++;
 			GameControl.Instance.game_data.ChallangeRestTime = GameControl.Instance.game_data.ChallangeTime;
@@ -118,12 +123,6 @@ public  class GameControl {
 
 	public void ChallangeGameFinshed()
 	{
-		int max_level = GameData.GetChanllangeLevel();
-		UIFinish.chanllange_level = max_level;
-		if (GameControl.Instance.game_data.ChallangePassedNumber > max_level)
-		{
-			GameData.SetChallangeLevel(GameControl.Instance.game_data.ChallangePassedNumber);
-		}
 		if (GameControl.Instance.game_data.ChallangePassedNumber > 0)
 		{
 			SDK.Instance.ReportScore(GameControl.Instance.game_data.ChallangePassedNumber);

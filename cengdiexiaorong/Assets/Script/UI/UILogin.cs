@@ -13,17 +13,21 @@ public class UILogin : UIBase {
 
 	public GameObject _setting;
 
+	public Text max_level;
+
 	public override void OnEnable()
 	{
 		base.OnEnable();
 		EventTriggerListener.Get(this._custom_game).onClick = this._OnClickCustom;
 		EventTriggerListener.Get(this._race_game).onClick = this._OnClickRace;
 		EventTriggerListener.Get(this._setting).onClick = this._OnClickSetting;
+		Refresh();
 	}
 
 	private void Refresh()
 	{
 		int level = GameData.GetChanllangeLevel();
+		max_level.text = string.Format("第{0}关", level);
 	}
 
 	private void _OnClickCustom(GameObject obj)
@@ -35,6 +39,8 @@ public class UILogin : UIBase {
 	{
 		GameControl.Instance.PlayGame( GameType.challenge, LevelDifficulty.Simple ,1);
 		SDK.Instance.StartLevel("进入挑战模式");
+		int max_level = GameData.GetChanllangeLevel();
+		UIFinish.chanllange_level = max_level;
 	}
 
 	private void _OnClickSetting(GameObject obj)

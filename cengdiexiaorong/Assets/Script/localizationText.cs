@@ -24,23 +24,23 @@ public class localizationText : Text {
 	private void SetText()
 	{
 #if UNITY_EDITOR
-		if(localization_languages != null && localization_languages.Length>=2)
-		{
-			if (Application.systemLanguage == SystemLanguage.Chinese)
-			{
-				this.m_Text = localization_languages[0];
-			}
-			else if (Application.systemLanguage == SystemLanguage.English)
-			{
-				this.m_Text = localization_languages[1];
-			}
-		}
+		//if(localization_languages != null && localization_languages.Length>=2)
+		//{
+		//	if (Application.systemLanguage == SystemLanguage.Chinese)
+		//	{
+		//		this.m_Text = localization_languages[0];
+		//	}
+		//	else if (Application.systemLanguage == SystemLanguage.English)
+		//	{
+		//		this.m_Text = localization_languages[1];
+		//	}
+		//}
 #else
 		if (lange_type == SystemLanguage.Chinese)
 		{
 			this.m_Text = localization_languages[0];
 		}
-		else if (lange_type == SystemLanguage.English)
+		else
 		{
 			this.m_Text = localization_languages[1];
 		}
