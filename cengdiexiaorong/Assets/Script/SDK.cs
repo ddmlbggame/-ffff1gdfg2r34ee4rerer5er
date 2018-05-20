@@ -10,11 +10,12 @@ using admob;
 public class SDK : MonoBehaviour {
 
 	public static SDK Instance;
-
+	// unity广告ID
 	public string unity_ads_game_id = "1798175";
-
+	// iosgamecenter排行榜
 	public string gamecenter_board_id = "challenge";
-
+	// ios appid 
+	public string APP_ID;
 
 	private void Awake()
 	{
@@ -62,6 +63,19 @@ public class SDK : MonoBehaviour {
 		Social.localUser.Authenticate(HandleAuthenticated);
 	}
 
+	public void SkipToAssetStore()
+	{
+#if UNITY_IPHONE || UNITY_EDITOR || UNITY_IOS
+		var url = string.Format(
+			"itms-apps://itunes.apple.com/cn/app/id{0}?mt=8&action=write-review",
+			APP_ID);
+		Application.OpenURL(url);
+		//if (UnityEngine.iOS.Device.RequestStoreReview())
+		//{
+		//	Debug.Log("Done");
+		//}
+#endif
+	}
 	/// <summary>  
 	/// 初始化 GameCenter 结果回调函数  
 	/// </summary>  
