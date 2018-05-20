@@ -8,8 +8,6 @@ public class UILevelItem : MonoBehaviour {
 
 	public GameObject Lock;
 
-	public GameObject Select;
-
 	private LevelData level_data;
 
 	public void OnEnable()
@@ -34,7 +32,6 @@ public class UILevelItem : MonoBehaviour {
 			this.Level.text = data.CurrentLevel.ToString();
 			int passed_level = GameData.GetPassedLevel(data.Level_Difficulty);
 			this.Lock.SetActive(passed_level< data.CurrentLevel);
-			this.Select.SetActive(data.CurrentLevel == passed_level);
 		}
 	}
 
