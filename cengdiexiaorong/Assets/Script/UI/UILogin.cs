@@ -27,7 +27,7 @@ public class UILogin : UIBase {
 	private void Refresh()
 	{
 		int level = GameData.GetChanllangeLevel();
-		max_level.text = string.Format("第{0}关", level);
+		max_level.text = string.Format(LTLocalization.GetText("1"), level);
 	}
 
 	private void _OnClickCustom(GameObject obj)

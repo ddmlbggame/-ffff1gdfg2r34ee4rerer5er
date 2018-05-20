@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameEnter : MonoBehaviour {
 	void Awake()
 	{
-		localizationText.lange_type = Application.systemLanguage;
+		LTLocalization.Init();
 		DontDestroyOnLoad(this.gameObject);
 		UIManager.Instance._Init(this.transform);
 		UIManager.Instance.PushShow(UILogin.Info, true);

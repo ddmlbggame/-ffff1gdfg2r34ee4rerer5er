@@ -7,6 +7,15 @@ public class localizationText : Text {
 	[HideInInspector]
 	public string[] localization_languages;
 	public static SystemLanguage lange_type;
+
+	protected override void Awake()
+	{
+		base.Awake();
+		if(lange_type == SystemLanguage.Unknown)
+		{
+			localizationText.lange_type = Application.systemLanguage;
+		}
+	}
 	protected override void OnEnable()
 	{
 		base.OnEnable();
