@@ -165,8 +165,6 @@ public class GameData {
 
 	public static int GetPassedLevel(LevelDifficulty level_difficulty)
 	{
-		// todo lingshi 
-		return 100;
 		int passed_level =  PlayerPrefs.GetInt(Enum.GetName(typeof(LevelDifficulty),level_difficulty));
 		if (passed_level <= 0)
 		{
@@ -198,6 +196,18 @@ public class GameData {
 		
 		return passed_level;
 	}
+
+	public static void SetPursedRemoveAds(bool pursed)
+	{
+		PlayerPrefs.SetInt("removeads", pursed?1:0);
+	}
+	public static bool GetPursedRemoveAds()
+	{
+		int pursed = PlayerPrefs.GetInt("removeads");
+
+		return pursed==1;
+	}
+
 
 	public void SetRandomLevel()
 	{

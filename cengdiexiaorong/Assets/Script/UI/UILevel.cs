@@ -28,8 +28,6 @@ public class UILevel : UIBase {
 		toggles[3].onValueChanged.AddListener(this.OnClickAbnormalToggle);
 		this.toggle_group.SetAllTogglesOff();
 		this.toggles[toggle_index].isOn = true;
-		// 测试 
-		SDK.Instance.SkipToAssetStore();
 	}
 
 	public void Refresh(LevelDifficulty level_difficulty)

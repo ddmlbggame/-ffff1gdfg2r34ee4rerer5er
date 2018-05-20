@@ -44,7 +44,7 @@ public class UIMain : UIBase {
 		
 		SDK.RewardUnityAds += _ShowTip;
 		Show();
-		Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
+		SDK.Instance.showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
 	}
 	public override void OnDisable()
 	{
@@ -210,13 +210,22 @@ public class UIMain : UIBase {
 
 	private void OnClickTip(GameObject obj)
 	{
-		if (GameControl.Instance.game_data.canshowtip)
+		bool pursed = GameData.GetPursedRemoveAds();
+		if (pursed)
 		{
 			GameScene.Instance.ShowTip();
 		}
 		else
 		{
-			UIManager.Instance.PushShow(UIBuy.Info);
+			if (GameControl.Instance.game_data.canshowtip)
+			{
+				GameScene.Instance.ShowTip();
+			}
+			else
+			{
+				UIManager.Instance.PushShow(UIBuy.Info);
+			}
 		}
+		
 	}
 }

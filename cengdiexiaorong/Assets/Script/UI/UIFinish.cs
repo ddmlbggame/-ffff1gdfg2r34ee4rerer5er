@@ -82,8 +82,19 @@ public class UIFinish : UIBase {
 	{
 		UIManager.Instance.Hide(Info);
 		UIManager.Instance.PopShow();
-		SDK.Instance.ShowInterstitial();
+		bool showrate = false;
+		int level = GameData.GetPassedLevel(GameControl.Instance.game_data.Current_Difficulty);
+		if (Random.Range(0,100) >=70 || (GameControl.Instance.game_data.currentGameLevel ==3 && level==4) )
+		{
+			showrate = true;
+			SDK.Instance.GoToCommnet();
+		}
+		if (!showrate)
+		{
+			SDK.Instance.ShowInterstitial();
+		}
 	}
+		
 
 	private void OnClickRestart(GameObject obj)
 	{

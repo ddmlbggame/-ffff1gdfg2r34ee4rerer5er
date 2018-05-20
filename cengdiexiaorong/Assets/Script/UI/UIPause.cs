@@ -14,6 +14,8 @@ public class UIPause : UIBase {
 
 	public GameObject advertising;
 
+	public GameObject restoradvertising;
+
 	public GameObject soundoff;
 
 	public GameObject soundon;
@@ -27,10 +29,22 @@ public class UIPause : UIBase {
 		EventTriggerListener.Get(this.close).onClick = this._OnClose;
 		EventTriggerListener.Get(this.sound).onClick = this._OnSound;
 		EventTriggerListener.Get(this.music).onClick = this._OnMusic;
+		EventTriggerListener.Get(this.restoradvertising).onClick = this._OnResorePurchase;
 		EventTriggerListener.Get(this.advertising).onClick = this._OnAdvertising;
+		SDK.PurchaseRemoveAds += RemovePurseRemoveAds;
 		this._Refresh();
 	}
 
+	public override void OnDisable()
+	{
+		base.OnDisable();
+		SDK.PurchaseRemoveAds -= RemovePurseRemoveAds;
+	}
+
+	private void RemovePurseRemoveAds(bool state)
+	{
+
+	}
 	private void _Refresh()
 	{
 		bool mute = FSoundManager.IsSoundMute;
@@ -47,7 +61,12 @@ public class UIPause : UIBase {
 	}
 	private void _OnAdvertising(GameObject obj)
 	{
-		
+		SDK.Instance.OnPurchaseClicked(SDK.Instance.AppPurchaseNoAds);
+	}
+
+	private void _OnResorePurchase(GameObject obj)
+	{
+		SDK.Instance.RestorePurchases();
 	}
 
 	private void _OnSound(GameObject obj)
