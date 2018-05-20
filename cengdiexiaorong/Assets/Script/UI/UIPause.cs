@@ -43,7 +43,7 @@ public class UIPause : UIBase {
 
 	private void RemovePurseRemoveAds(bool state)
 	{
-
+		this.advertising.SetActive(false);
 	}
 	private void _Refresh()
 	{
@@ -54,6 +54,7 @@ public class UIPause : UIBase {
 		bool music_mute = FSoundManager.IsMusicMute;
 		musicoff.SetActive(music_mute);
 		musicon.SetActive(!music_mute);
+		this.advertising.SetActive(!GameData.GetPursedRemoveAds());	
 	}
 	private void _OnClose(GameObject obj)
 	{

@@ -375,9 +375,6 @@ public class SDK : MonoBehaviour, IStoreListener
 		}
 	}
 
-	private string[] kProducts = new string[] {
-		
-	};
 	/// <summary>
 	/// Called when a purchase completes.
 	///
