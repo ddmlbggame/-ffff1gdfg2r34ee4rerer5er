@@ -216,7 +216,7 @@ public class UIMain : UIBase {
 		}
 		else
 		{
-			SDK.Instance.ShowRewardedVideo();
+			UIManager.Instance.PushShow(UIBuy.Info);
 		}
 	}
 }
