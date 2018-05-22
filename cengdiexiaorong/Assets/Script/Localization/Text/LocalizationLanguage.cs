@@ -17,10 +17,7 @@ public class LocalizationLanguage :MonoBehaviour {
 
 	public void Awake()
 	{
-		if (lange_type == SystemLanguage.Unknown)
-		{
-			localizationText.lange_type = Application.systemLanguage;
-		}
+		localizationText.lange_type = Application.systemLanguage;
 		if (text == null)
 		{
 			text = this.GetComponent<Text>();
