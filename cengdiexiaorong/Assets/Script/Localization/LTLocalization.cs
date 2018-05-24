@@ -30,64 +30,69 @@ public class LTLocalization
 	{
 		switch (language)
 		{
-			case SystemLanguage.Afrikaans:
-			case SystemLanguage.Arabic:
-			case SystemLanguage.Basque:
-			case SystemLanguage.Belarusian:
-			case SystemLanguage.Bulgarian:
-			case SystemLanguage.Catalan:
-				return LANGUAGE_ENGLISH;
 			case SystemLanguage.Chinese:
 			case SystemLanguage.ChineseTraditional:
 			case SystemLanguage.ChineseSimplified:
 				return LANGUAGE_CHINESE;
-			case SystemLanguage.Czech:
-			case SystemLanguage.Danish:
-			case SystemLanguage.Dutch:
-			case SystemLanguage.English:
-			case SystemLanguage.Estonian:
-			case SystemLanguage.Faroese:
-			case SystemLanguage.Finnish:
-				return LANGUAGE_ENGLISH;
-			case SystemLanguage.French:
-				return LANGUAGE_FRENCH;
-			case SystemLanguage.German:
-				return LANGUAGE_GERMAN;
-			case SystemLanguage.Greek:
-			case SystemLanguage.Hebrew:
-			case SystemLanguage.Icelandic:
-			case SystemLanguage.Indonesian:
-				return LANGUAGE_ENGLISH;
-			case SystemLanguage.Italian:
-				return LANGUAGE_ITALY;
-			case SystemLanguage.Japanese:
-				return LANGUAGE_JAPANESE;
-			case SystemLanguage.Korean:
-				return LANGUAGE_KOREA;
-			case SystemLanguage.Latvian:
-			case SystemLanguage.Lithuanian:
-			case SystemLanguage.Norwegian:
-			case SystemLanguage.Polish:
-			case SystemLanguage.Portuguese:
-			case SystemLanguage.Romanian:
-				return LANGUAGE_ENGLISH;
-			case SystemLanguage.Russian:
-				return LANGUAGE_RUSSIA;
-			case SystemLanguage.SerboCroatian:
-			case SystemLanguage.Slovak:
-			case SystemLanguage.Slovenian:
-				return LANGUAGE_ENGLISH;
-			case SystemLanguage.Spanish:
-				return LANGUAGE_SPANISH;
-			case SystemLanguage.Swedish:
-			case SystemLanguage.Thai:
-			case SystemLanguage.Turkish:
-			case SystemLanguage.Ukrainian:
-			case SystemLanguage.Vietnamese:
-			case SystemLanguage.Unknown:
-				return LANGUAGE_ENGLISH;
+
+			//case SystemLanguage.Afrikaans:
+			//case SystemLanguage.Arabic:
+			//case SystemLanguage.Basque:
+			//case SystemLanguage.Belarusian:
+			//case SystemLanguage.Bulgarian:
+			//case SystemLanguage.Catalan:
+			//	return LANGUAGE_ENGLISH;
+			//case SystemLanguage.Chinese:
+			//case SystemLanguage.ChineseTraditional:
+			//case SystemLanguage.ChineseSimplified:
+			//	return LANGUAGE_CHINESE;
+			//case SystemLanguage.Czech:
+			//case SystemLanguage.Danish:
+			//case SystemLanguage.Dutch:
+			//case SystemLanguage.English:
+			//case SystemLanguage.Estonian:
+			//case SystemLanguage.Faroese:
+			//case SystemLanguage.Finnish:
+			//	return LANGUAGE_ENGLISH;
+			//case SystemLanguage.French:
+			//	return LANGUAGE_FRENCH;
+			//case SystemLanguage.German:
+			//	return LANGUAGE_GERMAN;
+			//case SystemLanguage.Greek:
+			//case SystemLanguage.Hebrew:
+			//case SystemLanguage.Icelandic:
+			//case SystemLanguage.Indonesian:
+			//	return LANGUAGE_ENGLISH;
+			//case SystemLanguage.Italian:
+			//	return LANGUAGE_ITALY;
+			//case SystemLanguage.Japanese:
+			//	return LANGUAGE_JAPANESE;
+			//case SystemLanguage.Korean:
+			//	return LANGUAGE_KOREA;
+			//case SystemLanguage.Latvian:
+			//case SystemLanguage.Lithuanian:
+			//case SystemLanguage.Norwegian:
+			//case SystemLanguage.Polish:
+			//case SystemLanguage.Portuguese:
+			//case SystemLanguage.Romanian:
+			//	return LANGUAGE_ENGLISH;
+			//case SystemLanguage.Russian:
+			//	return LANGUAGE_RUSSIA;
+			//case SystemLanguage.SerboCroatian:
+			//case SystemLanguage.Slovak:
+			//case SystemLanguage.Slovenian:
+			//	return LANGUAGE_ENGLISH;
+			//case SystemLanguage.Spanish:
+			//	return LANGUAGE_SPANISH;
+			//case SystemLanguage.Swedish:
+			//case SystemLanguage.Thai:
+			//case SystemLanguage.Turkish:
+			//case SystemLanguage.Ukrainian:
+			//case SystemLanguage.Vietnamese:
+			//case SystemLanguage.Unknown:
+			//	return LANGUAGE_ENGLISH;
 		}
-		return LANGUAGE_CHINESE;
+		return LANGUAGE_ENGLISH;
 	}
 
 	private static string GetWinReadPath(string fileName)
@@ -141,12 +146,13 @@ public class LTLocalization
         {
             Debug.LogError("未检测到语言配置文件");
         }
-        else
-        {
-            string saveData = tempAsset.text;
-            LTLocalizationData currentLanguageData = (LTLocalizationData)SaveHelper.ReadData(saveData, typeof(LTLocalizationData), false);
-            textData = currentLanguageData.LanguageData;
-        }
+		else
+		{
+			string saveData = tempAsset.text;
+			LTLocalizationData currentLanguageData = (LTLocalizationData)SaveHelper.ReadData(saveData, typeof(LTLocalizationData), false);
+			Debug.LogError(currentLanguageData.ToString());
+			textData = currentLanguageData.LanguageData;
+		}
 #endif
 	}
 

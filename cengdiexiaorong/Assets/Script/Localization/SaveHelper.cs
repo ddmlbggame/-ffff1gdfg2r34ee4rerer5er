@@ -110,8 +110,9 @@ public static class SaveHelper
 		{
 			data = str;
 		}
-
+		UnityEngine.Debug.LogError("开始解析");
 		data = RijndaelDecrypt(data, M_KEY);
+		UnityEngine.Debug.LogError("解析完成" + data);
 		return DeserializeObject(data, pType);
 	}
 }

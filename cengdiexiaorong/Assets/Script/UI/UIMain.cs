@@ -80,6 +80,7 @@ public class UIMain : UIBase {
 		}
 		else
 		{
+			this._custom_level.text = string.Format("关卡{0}", GameControl.Instance.game_data.currentGameLevel);
 			this._challange_parent.SetActive(false);
 			this._cumsom_parent.SetActive(true);
 			if (this._custom_count_time != null)
